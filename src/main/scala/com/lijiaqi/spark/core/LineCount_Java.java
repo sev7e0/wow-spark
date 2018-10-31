@@ -1,5 +1,6 @@
 package com.lijiaqi.spark.core;
 
+import com.lijiaqi.spark.JavaSparkContextUtil;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -14,12 +15,8 @@ import scala.Tuple2;
  */
 public class LineCount_Java implements AutoCloseable {
 
-    private static JavaSparkContext context;
+    private static JavaSparkContext context = new JavaSparkContextUtil("LineCountLocal","local").getContext();
 
-    static {
-        SparkConf sparkConf = new SparkConf().setAppName("LineCountLocal").setMaster("local");
-        context = new JavaSparkContext(sparkConf);
-    }
     public static void main(String[] args) {
         JavaRDD<String> rdd = context.textFile("file:///home/sev7e0/DataSets/linecount.txt");
         //对每一行产生的rdd执行mapToPair算子,将每一行映射成为(line,1)数据结构,
@@ -37,8 +34,10 @@ public class LineCount_Java implements AutoCloseable {
                 return integer + integer2;
             }
         });
+        //通过key进行排序,在返回新的有序rdd
+        JavaPairRDD<String, Integer> sortRdd = reduceByKey.sortByKey();
         //执行action操作
-        reduceByKey.foreach(new VoidFunction<Tuple2<String, Integer>>() {
+        sortRdd.foreach(new VoidFunction<Tuple2<String, Integer>>() {
             @Override
             public void call(Tuple2<String, Integer> stringIntegerTuple2) throws Exception {
                 System.out.println(stringIntegerTuple2._1+":"+stringIntegerTuple2._2+"times");

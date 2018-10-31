@@ -20,12 +20,14 @@ public class LineCountLocal_Java implements AutoCloseable{
     public static void main(String[] args) {
         JavaRDD<String> javaRDD = context.textFile("file:/home/sev7e0/bigdata/spark-2.2.0-bin-hadoop2.7/README.md",5);
         JavaRDD<Integer> integerJavaRDD = javaRDD.map(new Function<String, Integer>() {
+            @Override
             public Integer call(String s) {
                 return s.length();
             }
         });
 
         Integer res = integerJavaRDD.reduce(new Function2<Integer, Integer, Integer>() {
+            @Override
             public Integer call(Integer integer, Integer integer2) {
                 return integer + integer2;
             }
@@ -34,6 +36,7 @@ public class LineCountLocal_Java implements AutoCloseable{
 
     }
 
+    @Override
     public void close() {
         context.close();
     }

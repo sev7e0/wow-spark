@@ -24,7 +24,64 @@ public class TransformationOperation_Java {
     public static void main(String[] args) {
         //通过工具类获得context
         JavaSparkContext context = new JavaSparkContextUtil("TransformationOperation_Java", "local").getContext();
-        gropByKey(context);
+        coGroup(context);
+    }
+
+    //cogroup会根据rdd的key将所有的valve值进行聚合
+    //只不过每个rdd会是一个独立的Iterable
+    private static void coGroup(JavaSparkContext context){
+        List<Tuple2<Integer, String>> tuple2List = Arrays.asList(new Tuple2<Integer, String>(1, "leo"),
+                new Tuple2<Integer, String>(2, "json"),
+                new Tuple2<Integer, String>(3, "spark"),
+                new Tuple2<Integer, String>(2, "fire"),
+                new Tuple2<Integer, String>(1, "samsung"));
+        List<Tuple2<Integer, Integer>> scores = Arrays.asList(new Tuple2<Integer, Integer>(1, 25),
+                new Tuple2<Integer, Integer>(2, 89),
+                new Tuple2<Integer, Integer>(3, 100),
+                new Tuple2<Integer, Integer>(3, 75),
+                new Tuple2<Integer, Integer>(1, 0));
+
+        JavaPairRDD<Integer, String> nameRdd = context.parallelizePairs(tuple2List);
+        JavaPairRDD<Integer, Integer> scoreRdd = context.parallelizePairs(scores);
+        //join以后会根据两个rdd的key进行返回一个新的PairRdd
+        JavaPairRDD<Integer, Tuple2<Iterable<String>, Iterable<Integer>>> integerTuple2JavaPairRDD = nameRdd.cogroup(scoreRdd);
+        integerTuple2JavaPairRDD.foreach(new VoidFunction<Tuple2<Integer, Tuple2<Iterable<String>, Iterable<Integer>>>>() {
+            @Override
+            public void call(Tuple2<Integer, Tuple2<Iterable<String>, Iterable<Integer>>> integerTuple2Tuple2) throws Exception {
+                System.out.println(integerTuple2Tuple2._1);
+                System.out.println(integerTuple2Tuple2._2._1);
+                System.out.println(integerTuple2Tuple2._2._2);
+                System.out.println("-------------------------");
+            }
+        });
+    }
+
+    //join算子可以将两个rdd进行关联
+    private static void join(JavaSparkContext context){
+        List<Tuple2<Integer, String>> tuple2List = Arrays.asList(new Tuple2<Integer, String>(1, "leo"),
+                new Tuple2<Integer, String>(2, "json"),
+                new Tuple2<Integer, String>(3, "spark"),
+                new Tuple2<Integer, String>(4, "fire"),
+                new Tuple2<Integer, String>(5, "samsung"));
+        List<Tuple2<Integer, Integer>> scores = Arrays.asList(new Tuple2<Integer, Integer>(1, 25),
+                new Tuple2<Integer, Integer>(2, 89),
+                new Tuple2<Integer, Integer>(3, 100),
+                new Tuple2<Integer, Integer>(4, 75),
+                new Tuple2<Integer, Integer>(5, 0));
+
+        JavaPairRDD<Integer, String> nameRdd = context.parallelizePairs(tuple2List);
+        JavaPairRDD<Integer, Integer> scoreRdd = context.parallelizePairs(scores);
+        //join以后会根据两个rdd的key进行返回一个新的PairRdd
+        JavaPairRDD<Integer, Tuple2<String, Integer>> join = nameRdd.join(scoreRdd);
+        join.foreach(new VoidFunction<Tuple2<Integer, Tuple2<String, Integer>>>() {
+            @Override
+            public void call(Tuple2<Integer, Tuple2<String, Integer>> integerTuple2Tuple2) throws Exception {
+                System.out.println(integerTuple2Tuple2._1);
+                System.out.println(integerTuple2Tuple2._2._1);
+                System.out.println(integerTuple2Tuple2._2._2);
+                System.out.println("-------------------------");
+            }
+        });
     }
 
     //gropByKey算子实例:按照班级对成绩进行分组

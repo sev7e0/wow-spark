@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class ActionOperation_Java {
     public static void main(String[] args) {
+        //统一使用JavaSparkContextUtil获取context对象
         JavaSparkContext context = new JavaSparkContextUtil("ActionOperation_Java", "local").getContext();
 
 //        reduce(context);
@@ -21,9 +22,9 @@ public class ActionOperation_Java {
         count(context);
     }
 
+    //reduce操作
     private static void reduce(JavaSparkContext context){
         List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
-
         Integer reduce = context.parallelize(integerList)
                 .reduce(new Function2<Integer, Integer, Integer>() {
                     @Override
@@ -56,7 +57,6 @@ public class ActionOperation_Java {
     //统计rdd中含有多少个元素
     private static void count(JavaSparkContext context){
         List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
-
         long count = context.parallelize(integerList)
                 .count();
         System.out.println(count);
@@ -65,7 +65,6 @@ public class ActionOperation_Java {
     //与collect相似，只不过是从远程拿取rdd中的前n个元素
     private static void take(JavaSparkContext context){
         List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
-
         List<Integer> take = context.parallelize(integerList)
                 .take(5);
         for (Integer integer : take){

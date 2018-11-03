@@ -129,9 +129,7 @@ public class TransformationOperation_Java {
 
     //使用filter算子
     private static void filter(JavaSparkContext context){
-
         List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-
         //filter算子在返回时,若判断结果为true 保留当前结果,若为false则进行抛弃,返回新的rdd
         JavaRDD<Integer> filter = context.parallelize(list).filter(new Function<Integer, Boolean>() {
             @Override

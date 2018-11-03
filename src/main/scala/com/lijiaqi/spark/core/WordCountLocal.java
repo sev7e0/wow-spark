@@ -31,7 +31,6 @@ public class WordCountLocal {
 
         //将每一行拆分成单个的单词
         //FlatMapFunction包含两个泛型参数,String(输入)/Object*(输出)
-        //
         final JavaRDD<String> words = rdd.flatMap(new FlatMapFunction<String, String>() {
             private static final long serialVersionUID = 1L;
             public Iterator<String> call(String s) throws Exception {

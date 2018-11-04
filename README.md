@@ -10,5 +10,5 @@ LinesCount:point_right:java:heavy_check_mark:scala:heavy_check_mark:
 Transformation:point_right:java:heavy_check_mark:scala:heavy_check_mark:
 include:hammer:map、flatMap、groupByKey、filter、join、cogroup
 
-Action:point_right:java:heavy_check_mark:scala:heavy_exclamation_mark:
+Action:point_right:java:heavy_check_mark:scala:heavy_check_mark:
 include:hammer:reduce、count、take、collect

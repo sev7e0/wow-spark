@@ -12,3 +12,5 @@ include:hammer:map、flatMap、groupByKey、filter、join、cogroup
 
 Action:point_right:java:heavy_check_mark:scala:heavy_check_mark:
 include:hammer:reduce、count、take、collect
+
+Broadcast&Accumulator:point_right:java:heavy_check_mark:scala:heavy_check_mark:

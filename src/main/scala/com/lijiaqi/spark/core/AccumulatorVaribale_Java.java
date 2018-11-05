@@ -3,6 +3,7 @@ package com.lijiaqi.spark.core;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.api.java.function.VoidFunction;
 import org.apache.spark.util.LongAccumulator;
 
 import java.util.Arrays;
@@ -15,7 +16,7 @@ public class AccumulatorVaribale_Java {
         sparkConf.setMaster("local").setAppName("AccumulatorVariable_Scala");
         final JavaSparkContext context = new JavaSparkContext(sparkConf);
 
-        LongAccumulator accumulator = context.sc().longAccumulator();
+        final LongAccumulator accumulator = context.sc().longAccumulator();
         accumulator.setValue(0);
         //Spark2.0中不在推荐使用Accumulator
 //        final Accumulator<Integer> accumulator = context.intAccumulator(5);
@@ -31,7 +32,12 @@ public class AccumulatorVaribale_Java {
 //            }
 //        });
         //将上边代码改写为lambda风格
-        rdd.foreach(integer -> accumulator.add(Long.valueOf(integer)));
+        rdd.foreach(new VoidFunction<Integer>() {
+            @Override
+            public void call(Integer integer) throws Exception {
+                accumulator.add(Long.valueOf(integer));
+            }
+        });
         System.out.println(accumulator.value());
     }
 }

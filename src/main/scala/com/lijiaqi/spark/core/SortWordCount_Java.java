@@ -23,7 +23,7 @@ public class SortWordCount_Java {
 
         JavaRDD<String> linesrdd = context.textFile("file:/home/sev7e0/bigdata/spark-2.2.0-bin-hadoop2.7/README.md", 5);
 
-        JavaRDD<String> stringJavaRDD = linesrdd.flatMap((FlatMapFunction<String, String>) new FlatMapFunction<String, String>() {
+        JavaRDD<String> stringJavaRDD = linesrdd.flatMap(new FlatMapFunction<String, String>() {
             @Override
             public Iterator<String> call(String s) throws Exception {
                 return Arrays.asList(s.split(" ")).iterator();
@@ -37,14 +37,28 @@ public class SortWordCount_Java {
             }
         });
 
-        JavaPairRDD<String, Integer> rdd = pairrdd.reduceByKey((Function2<Integer, Integer, Integer>) (integer, integer2) -> integer + integer2);
+        JavaPairRDD<String, Integer> rdd = pairrdd.reduceByKey(new Function2<Integer, Integer, Integer>() {
+            @Override
+            public Integer call(Integer integer, Integer integer2) throws Exception {
+                return integer +integer2;
+            }
+        });
 
-        JavaPairRDD<Integer, String> convertRdd = rdd.mapToPair((PairFunction<Tuple2<String, Integer>, Integer, String>) stringIntegerTuple2 -> new Tuple2<Integer, String>(stringIntegerTuple2._2, stringIntegerTuple2._1));
+        JavaPairRDD<Integer, String> convertRdd = rdd.mapToPair(new PairFunction<Tuple2<String, Integer>, Integer, String>() {
+            @Override
+            public Tuple2<Integer, String> call(Tuple2<String, Integer> stringIntegerTuple2) throws Exception {
+                return new Tuple2<>(stringIntegerTuple2._2, stringIntegerTuple2._1);
+            }
+        });
 
         JavaPairRDD<Integer, String> sortByKeyRdd = convertRdd.sortByKey(false);
 
-        JavaPairRDD<String, Integer> resRdd = sortByKeyRdd.mapToPair((PairFunction<Tuple2<Integer, String>, String, Integer>) stringIntegerTuple2 -> new Tuple2<String, Integer>(stringIntegerTuple2._2, stringIntegerTuple2._1));
-
+        JavaPairRDD<String, Integer> resRdd = sortByKeyRdd.mapToPair(new PairFunction<Tuple2<Integer, String>, String, Integer>() {
+            @Override
+            public Tuple2<String, Integer> call(Tuple2<Integer, String> integerStringTuple2) throws Exception {
+                return new Tuple2<>(integerStringTuple2._2, integerStringTuple2._1);
+            }
+        });
 
         resRdd.foreach(new VoidFunction<Tuple2<String, Integer>>() {
             @Override

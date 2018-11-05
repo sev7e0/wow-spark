@@ -3,9 +3,8 @@
   <groupId>com.lijiaqi.spark</groupId>
   <artifactId>spark-learn</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <inceptionYear>2008</inceptionYear>
   <properties>
-    <scala.version>2.11.6</scala.version>
+    <scala.version>2.12.7</scala.version>
     <kafka.version>1.0.0</kafka.version>
     <spark.version>2.2.0</spark.version>
     <hadoop.version>2.7.5</hadoop.version>
@@ -126,8 +125,8 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
-                <source>8</source>
-                <target>8</target>
+                <source>7</source>
+                <target>7</target>
             </configuration>
         </plugin>
     </plugins>

@@ -26,7 +26,12 @@ public class ActionOperation_Java {
     private static void reduce(JavaSparkContext context){
         List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
         Integer reduce = context.parallelize(integerList)
-                .reduce((Function2<Integer, Integer, Integer>) (integer, integer2) -> integer * integer2);
+                .reduce(new Function2<Integer, Integer, Integer>() {
+                    @Override
+                    public Integer call(Integer integer, Integer integer2) throws Exception {
+                        return integer * integer2;
+                    }
+                });
         System.out.println(reduce);
     }
 

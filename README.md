@@ -14,3 +14,5 @@ Action:point_right:java:heavy_check_mark:scala:heavy_check_mark:
 include:hammer:reduce、count、take、collect
 
 Broadcast&Accumulator:point_right:java:heavy_check_mark:scala:heavy_check_mark:
+
+SecondarySort:point_right:java:heavy_check_mark:scala:heavy_check_mark:

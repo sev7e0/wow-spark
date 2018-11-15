@@ -44,7 +44,7 @@ public class TransformationOperation_Java {
         JavaPairRDD<Integer, String> nameRdd = context.parallelizePairs(tuple2List);
         JavaPairRDD<Integer, Integer> scoreRdd = context.parallelizePairs(scores);
         //join以后会根据两个rdd的key进行返回一个新的PairRdd
-        JavaPairRDD<Integer, Tuple2<Iterable<String>, Iterable<Integer>>> integerTuple2JavaPairRDD = nameRdd.cogroup(scoreRdd);
+        JavaPairRDD<Integer, Tuple2<Iterable<String>, Iterable<Integer>>> integerTuple2JavaPairRDD = (JavaPairRDD<Integer, Tuple2<Iterable<String>, Iterable<Integer>>>) nameRdd.cogroup(scoreRdd);
         integerTuple2JavaPairRDD.foreach(new VoidFunction<Tuple2<Integer, Tuple2<Iterable<String>, Iterable<Integer>>>>() {
             @Override
             public void call(Tuple2<Integer, Tuple2<Iterable<String>, Iterable<Integer>>> integerTuple2Tuple2) throws Exception {
@@ -72,7 +72,7 @@ public class TransformationOperation_Java {
         JavaPairRDD<Integer, String> nameRdd = context.parallelizePairs(tuple2List);
         JavaPairRDD<Integer, Integer> scoreRdd = context.parallelizePairs(scores);
         //join以后会根据两个rdd的key进行返回一个新的PairRdd
-        JavaPairRDD<Integer, Tuple2<String, Integer>> join = nameRdd.join(scoreRdd);
+        JavaPairRDD<Integer, Tuple2<String, Integer>> join = (JavaPairRDD<Integer, Tuple2<String, Integer>>) nameRdd.join(scoreRdd);
         join.foreach(new VoidFunction<Tuple2<Integer, Tuple2<String, Integer>>>() {
             @Override
             public void call(Tuple2<Integer, Tuple2<String, Integer>> integerTuple2Tuple2) throws Exception {

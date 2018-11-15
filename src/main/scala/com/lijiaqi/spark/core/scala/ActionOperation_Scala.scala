@@ -9,6 +9,7 @@ object ActionOperation_Scala {
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf().setMaster("local").setAppName("ActionOperation_Scala")
     val context = new SparkContext(conf)
+    reduce(context)
   }
 
   def reduce(context: SparkContext): Unit ={

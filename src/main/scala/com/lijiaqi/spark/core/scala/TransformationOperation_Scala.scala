@@ -30,13 +30,13 @@ object TransformationOperation_Scala {
           new Tuple2[String, Integer]("class3", 580),
           new Tuple2[String, Integer]("class1", 75))
         context.parallelize(listRdd).groupByKey().foreach(rdd=>{println(rdd._1);for(score <- rdd._2) println(score)})
-        context.parallelize(listRdd).flatMap(_.split(" ")).foreach(println(_))
+//        context.parallelize(listRdd)
   }
 
   def cogroup(context: SparkContext): Unit = {
     val scoreList = Array(new Tuple2[Integer, Integer](1, 25),
       new Tuple2[Integer, Integer](2, 89),
-      Tuple2(3, 100),
+      new Tuple2[Integer, Integer](3, 100),
       new Tuple2[Integer, Integer](4, 75),
       new Tuple2[Integer, Integer](5, 0))
     val nameList = Array(new Tuple2[Integer, String](1, "leo"),
@@ -53,10 +53,10 @@ object TransformationOperation_Scala {
       })
   }
 
-  def cogroup(context: SparkContext): Unit ={
+  def cogroups(context: SparkContext): Unit ={
     val scoreList = Array(new Tuple2[Integer, Integer](1, 25),
       new Tuple2[Integer, Integer](2, 89),
-      Tuple2(3, 100),
+      new Tuple2[Integer, Integer](3, 100),
       new Tuple2[Integer, Integer](3, 75),
       new Tuple2[Integer, Integer](1, 0))
     val nameList = Array(new Tuple2[Integer, String](1, "leo"),

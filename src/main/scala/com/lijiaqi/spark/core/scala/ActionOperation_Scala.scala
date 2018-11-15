@@ -38,7 +38,7 @@ object ActionOperation_Scala {
 
   def take(context: SparkContext): Unit ={
     val ints = Array(1,2,3,4,5,6,7,8,9)
-    val arrays = context.parallelize(arrays).take(5)
+    val arrays = context.parallelize(ints).take(5)
     for (num <- arrays){
       println(num)
     }

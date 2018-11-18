@@ -18,3 +18,5 @@ Broadcast&Accumulator:point_right:java:heavy_check_mark:scala:heavy_check_mark:
 SecondarySort:point_right:java:heavy_check_mark:scala:heavy_check_mark:
 
 TopN:point_right:java:heavy_check_mark:scala:heavy_check_mark:
+
+Group TopN:point_right:java:heavy_check_mark:scala:heavy_multiplication_x:

@@ -27,49 +27,37 @@ public class TopNGroup_Java {
 
         JavaRDD<String> stringJavaRDD = context.textFile("/Users/sev7e0/dataset/topn-group.txt");
 
-        JavaPairRDD<String, Integer> pairRDD = stringJavaRDD.mapToPair(new PairFunction<String, String, Integer>() {
-            @Override
-            public Tuple2<String, Integer> call(String s) throws Exception {
-                String[] strings = s.split(" ");
-                return new Tuple2<String, Integer>(strings[0], Integer.valueOf(strings[1]));
-            }
-
+        JavaPairRDD<String, Integer> pairRDD = stringJavaRDD.mapToPair((PairFunction<String, String, Integer>) s -> {
+            String[] strings = s.split(" ");
+            return new Tuple2<String, Integer>(strings[0], Integer.valueOf(strings[1]));
         });
 
         JavaPairRDD<String, Iterable<Integer>> groupRdd = pairRDD.groupByKey();
 
-        groupRdd.foreach(new VoidFunction<Tuple2<String, Iterable<Integer>>>() {
-            @Override
-            public void call(Tuple2<String, Iterable<Integer>> stringIterableTuple2) throws Exception {
+        groupRdd.foreach((VoidFunction<Tuple2<String, Iterable<Integer>>>)stringIterableTuple2 -> {
                 System.out.println(stringIterableTuple2._1);
-                stringIterableTuple2._2.forEach(score->{
-                    System.out.println(score);
-                });
-            }
+                stringIterableTuple2._2.forEach(score-> System.out.println(score));
         });
 
-        JavaRDD<Tuple2<String, Iterable<Integer>>> map = groupRdd.map(new Function<Tuple2<String, Iterable<Integer>>, Tuple2<String, Iterable<Integer>>>() {
-            @Override
-            public Tuple2<String, Iterable<Integer>> call(Tuple2<String, Iterable<Integer>> stringIterableTuple2) throws Exception {
-                Integer[] integers = new Integer[3];
-                stringIterableTuple2._2.forEach(integer -> {
+        JavaRDD<Tuple2<String, Iterable<Integer>>> map = groupRdd.map((Function<Tuple2<String, Iterable<Integer>>, Tuple2<String, Iterable<Integer>>>) stringIterableTuple2 -> {
+            Integer[] integers = new Integer[3];
+            stringIterableTuple2._2.forEach(integer -> {
 
-                    for (int i = 0; i < 3; i++) {
-                        if (integers[i] == null) {
-                            integers[i] = integer;
-                            break;
-                        }
-                        if (integer > integers[i]) {
-                            for (int j = 2; j < i; j--) {
-                                integers[j] = integers[j - 1];
-                            }
-                            integers[i] = integer;
-                            break;
-                        }
+                for (int i = 0; i < 3; i++) {
+                    if (integers[i] == null) {
+                        integers[i] = integer;
+                        break;
                     }
-                });
-                return new Tuple2<>(stringIterableTuple2._1, Arrays.asList(integers));
-            }
+                    if (integer > integers[i]) {
+                        for (int j = 2; j < i; j--) {
+                            integers[j] = integers[j - 1];
+                        }
+                        integers[i] = integer;
+                        break;
+                    }
+                }
+            });
+            return new Tuple2<>(stringIterableTuple2._1, Arrays.asList(integers));
         });
 
 

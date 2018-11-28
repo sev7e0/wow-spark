@@ -34,28 +34,40 @@ public class LRUCache<K, V> {
     public void put(K key, V value){
         CacheNode node = cache.get(key);
         if (node == null){
+            //判断容量是否等于当前的size,是的话将会移除最后一个
             if (Objects.equals(currentCacheSize, cacheCapcity)){
                 cache.remove(key);
                 removeLast();
             }
+            //创建一个新的缓存节点
             node = new CacheNode();
             node.key = key;
         }
         node.value = value;
         moveToFirst(node);
         cache.put(key, node);
+        //重新计算cache的大小
         currentCacheSize = cache.size();
     }
 
+    /**
+     *  根据key去获取value
+     * @param key cache的key值
+     * @return 返回cache中key对应的value
+     */
     public Object get(K key){
         CacheNode cacheNode = cache.get(key);
         if (cacheNode == null){
             return null;
         }
+        //将找到的cache节点进行前移操作,并返回value值
         moveToFirst(cacheNode);
         return cacheNode.value;
     }
 
+    /**
+     * 清空操作
+     */
     public void clear(){
         cache.clear();
         first = null;
@@ -63,6 +75,11 @@ public class LRUCache<K, V> {
         cacheCapcity = 0;
     }
 
+    /**
+     * 根据key进行remove操作
+     * @param key
+     * @return
+     */
     public Object remove(K key){
         CacheNode cacheNode = cache.get(key);
         if (cacheNode != null){
@@ -83,9 +100,10 @@ public class LRUCache<K, V> {
         return cache.remove(key);
     }
 
-
-
-
+    /**
+     * 将节点移动到最前
+     * @param node 被移动的cache节点
+     */
     private void moveToFirst(CacheNode node) {
         if(first == node){
             return;
@@ -110,6 +128,9 @@ public class LRUCache<K, V> {
         first.pre=null;
     }
 
+    /**
+     * 移除最末尾的操作,在cache达到容量时进行的操作
+     */
     private void removeLast(){
         if (last != null){
             cache.remove(last.key);
@@ -133,6 +154,9 @@ public class LRUCache<K, V> {
         return sb.toString();
     }
 
+    /**
+     * cache的节点内部类
+     */
     class CacheNode{
         CacheNode next;
         CacheNode pre;

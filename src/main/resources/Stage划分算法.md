@@ -12,16 +12,12 @@ private def getOrCreateShuffleMapStage(
       case None =>
         // Create stages for all missing ancestor shuffle dependencies.
         getMissingAncestorShuffleDependencies(shuffleDep.rdd).foreach { dep =>
-          // Even though getMissingAncestorShuffleDependencies only returns shuffle dependencies
-          // that were not already in shuffleIdToMapStage, it's possible that by the time we
-          // get to a particular dependency in the foreach loop, it's been added to
-          // shuffleIdToMapStage by the stage creation process for an earlier dependency. See
-          // SPARK-13902 for more information.
           if (!shuffleIdToMapStage.contains(dep.shuffleId)) {
             createShuffleMapStage(dep, firstJobId)
           }
         }
         // Finally, create a stage for the given shuffle dependency.
+        //根据给定的shuffleDep创建一个stage,并返回
         createShuffleMapStage(shuffleDep, firstJobId)
     }
   }
@@ -29,20 +25,23 @@ private def getOrCreateShuffleMapStage(
 2. 通过submitStage将FinalStage进行提交,由此开始了Stage划分算法的重要步骤
 ```scala
 /** Submits stage, but first recursively submits any missing parents. */
+  //想递归出缺少父依赖
   private def submitStage(stage: Stage) {
     val jobId = activeJobForStage(stage)
     if (jobId.isDefined) {
       logDebug("submitStage(" + stage + ")")
+      //先去确认当前stage不在stage等待队列,stage执行队列以及失败队列
       if (!waitingStages(stage) && !runningStages(stage) && !failedStages(stage)) {
-        //获取当前stage的父stage
+        //获取当前stage缺少的父依赖父stage
         val missing = getMissingParentStages(stage).sortBy(_.id)
         logDebug("missing: " + missing)
+        //缺少的依赖集合为空,则开始准备提交
         if (missing.isEmpty) {
           logInfo("Submitting " + stage + " (" + stage.rdd + "), which has no missing parents")
           //在这里边调用了submitWaitingChildStages该方法,将所有等调度的stage进行提交
           submitMissingTasks(stage, jobId.get)
         } else {
-          //如果父stage不为空的话,递归调用在去寻找该stage的父stage,直到父stage不存在也就是第一个RDD
+          //如果父stage不为空的话,递归调用在去寻找该stage的父stage,知道不存在缺少的父依赖
           for (parent <- missing) {
             submitStage(parent)
           }
@@ -80,7 +79,7 @@ private def getMissingParentStages(stage: Stage): List[Stage] = {
                 if (!mapStage.isAvailable) {
                   missing += mapStage
                 }
-                //如果是在依赖推入栈中
+                //如果是窄依赖推入栈中
               case narrowDep: NarrowDependency[_] =>
                 waitingForVisit.push(narrowDep.rdd)
             }
@@ -89,6 +88,7 @@ private def getMissingParentStages(stage: Stage): List[Stage] = {
       }
     }
     waitingForVisit.push(stage.rdd)
+    //若当前等待遍历的堆栈不为空,则继续出栈开始寻找
     while (waitingForVisit.nonEmpty) {
       visit(waitingForVisit.pop())
     }
@@ -97,29 +97,5 @@ private def getMissingParentStages(stage: Stage): List[Stage] = {
 ```
 4. 返回后的stage会判断是否为空,若为空则表明该stage没有父stage,若不为空将会遍历这个stage集合,然后递归的取寻找每一个父stage,知道全部为空时,提交stage,进行下一步的task创建
 ```scala
-private def submitStage(stage: Stage) {
-    val jobId = activeJobForStage(stage)
-    if (jobId.isDefined) {
-      logDebug("submitStage(" + stage + ")")
-      if (!waitingStages(stage) && !runningStages(stage) && !failedStages(stage)) {
-        //获取当前stage的父stage
-        val missing = getMissingParentStages(stage).sortBy(_.id)
-        logDebug("missing: " + missing)
-        if (missing.isEmpty) {
-          logInfo("Submitting " + stage + " (" + stage.rdd + "), which has no missing parents")
-          //在这里边调用了submitWaitingChildStages该方法,将所有等调度的stage进行提交
-          submitMissingTasks(stage, jobId.get)
-        } else {
-          //如果父stage不为空的话,递归调用在去寻找该stage的父stage,直到父stage不存在也就是第一个RDD
-          for (parent <- missing) {
-            submitStage(parent)
-          }
-          //并且将该stage放入等待调用的队列
-          waitingStages += stage
-        }
-      }
-    } else {
-      abortStage(stage, "No active job for stage " + stage.id, None)
-    }
-  }
+
 ```

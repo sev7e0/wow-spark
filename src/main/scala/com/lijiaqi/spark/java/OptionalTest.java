@@ -19,15 +19,17 @@ import java.util.function.Predicate;
 public class OptionalTest {
     public static void main(String[] args) {
         //Optional 为了解决空指针问题
-        Optional<String> spark_learn = Optional.of("Spark learn");
+        Optional<String> sparkLearn = Optional.of("Spark learn");
+        Optional<String> learn = Optional.ofNullable(null);
         Optional<String> sparkContext = Optional.empty();
-        System.out.println(spark_learn.isPresent());
-        System.out.println(sparkContext.isPresent());
-        System.out.println(sparkContext.orElse("defult"));
+        System.out.println(sparkLearn.isPresent()); //true
+        System.out.println(learn.isPresent()); //false
+        System.out.println(sparkContext.isPresent());//false
+        System.out.println(sparkContext.orElse("defult"));//defult
 
-        System.out.println(spark_learn.get());
+        System.out.println(sparkLearn.get());
 
-        System.out.println(spark_learn.filter(new Predicate<String>() {
+        System.out.println(sparkLearn.filter(new Predicate<String>() {
             @Override
             public boolean test(String s) {
                 if (s == "Spark learn")

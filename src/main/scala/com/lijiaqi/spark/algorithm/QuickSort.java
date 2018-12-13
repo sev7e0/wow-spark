@@ -10,6 +10,7 @@ package com.lijiaqi.spark.algorithm;
  * @create: 2018-12-11 14:56
  **/
 
+import java.util.Arrays;
 /**
  * 主要思想:如果待排序的长度每趟排序选取一个基准值,以该值为中心将未排序的序列进行分割,比该值小的放在左侧,比该值大的放在右侧,
  *         并持续迭代,直到迭代的序列长度<2
@@ -23,26 +24,27 @@ package com.lijiaqi.spark.algorithm;
  *         我们可以考虑使用插入排序替代快排.
  *         3.基于基准值的区域划分:在选取了合适的基准值后，需要考虑的问题是，如果待排序列中存在了多个重复值，或者说全部都是重复值，那将会再次
  *         算法的最坏情况，这时我们可以新增一块存放于基准值相等的区域，这种方式又叫做'三路快排'/'三路划分',在将序列中其他值排好序后,将改序列插入即可.
- *
+ * 其他实现:双基准排
  */
 public class QuickSort {
 
     public static void main(String[] args) {
-        int[] a = {1,5,4,6,3,2,7};
+        int[] a = {1,5,4,7,3,25,5,5,6,6,6,6,5,5,6,6};
+
         quickSort(a,0,a.length-1);
     }
 
-    public static void quickSort(int[] arr,int left, int right){
+    private static void quickSort(int[] arr,int left, int right){
         if (left>=right){
-            System.out.println("complete");
+            return;
         }
-        int index = partSort2(arr,left,right);
+        int index = partSort(arr,left,right);
         quickSort(arr, left,index-1);
         quickSort(arr, index+1, right);
+        print(arr);
     }
     //左右指针法
     private static int partSort(int[] arr, int left, int right) {
-        selectMid(arr);
         int index = right;
         int value = arr[index];
         while (left<right){
@@ -59,7 +61,6 @@ public class QuickSort {
     }
     //填坑法
     private static int partSort2(int[] arr, int left, int right){
-        selectMid(arr);
         int value = arr[right];
         while (left<right){
             while (left<right && arr[left]<=value){
@@ -75,8 +76,96 @@ public class QuickSort {
 
         return right;
     }
+
+    /**
+     * 三路快排的实现
+     * @param nums 待排序列
+     * @param left 待排序列最左索引值
+     * @param right 待排序列最右索引值
+     */
+    private static void sort3(int[] nums, int left, int right){
+        //当左右指针相遇时直接返回
+        if (left >= right){
+            return;
+        }
+        //使用指针i作为与基准值相等的元素的区域边界
+        int lt=left,gt=right,i =right-1;
+        //这里才有最右元素作为基准值,也就是说i <- gt这片区域都将存储与基准值相等的元素
+        int value = nums[right];
+        //以下是初始状态 { 1 , 5 , 4 , 7 , 3 , 25 ,    5    }
+        //              lt                   i   gt/value
+        //过程主要是nums[i]与value比较
+        while (i >= lt){
+            // 大于value的值扔到gt后边,gt前移
+            if (nums[i] > value){
+                swap(nums, i--, gt--);
+            }
+            // 小于value的值扔到lt前边,lt后移
+            else if(nums[i] < value){
+                swap(nums, i, lt++);
+            }
+            //等于情况下不操作,直接i前移
+            else {
+                i--;
+            }
+        }
+        //开始分区域迭代,同时基准值相等的元素的区域不参与迭代
+        sort3(nums, left, lt - 1);
+        sort3(nums, gt, right);
+        print(nums);
+    }
+
+
+    private void sort(int[] input, int lowIndex, int highIndex) {
+
+        if (highIndex<=lowIndex) return;
+
+        int pivot1=input[lowIndex];
+        int pivot2=input[highIndex];
+
+        if (pivot1>pivot2){
+            swap(input, lowIndex, highIndex);
+            pivot1=input[lowIndex];
+            pivot2=input[highIndex];
+        }
+        else if (pivot1==pivot2){
+            while (pivot1==pivot2 && lowIndex<highIndex){
+                lowIndex++;
+                pivot1=input[lowIndex];
+            }
+        }
+
+        int i=lowIndex+1;
+        int lt=lowIndex+1;
+        int gt=highIndex-1;
+
+        while (i<=gt){
+
+            if (input[i]> pivot1){
+                swap(input, i++, lt++);
+            }
+            else if (pivot2> input[i]){
+                swap(input, i, gt--);
+            }
+            else{
+                i++;
+            }
+
+        }
+
+        swap(input, lowIndex, --lt);
+        swap(input, highIndex, ++gt);
+
+        sort(input, lowIndex, lt-1);
+        sort (input, lt+1, gt-1);
+        sort(input, gt+1, highIndex);
+
+    }
     //选取中间值的方法
-    private static void selectMid(int[] arr){
+    private static int[] selectMid(int[] arr){
+        if (arr.length<3){
+            return arr;
+        }
         int lenth = arr.length-1;
         int head = arr[0];
         int tail = arr[lenth];
@@ -94,6 +183,7 @@ public class QuickSort {
         }else if (tail == mid){
             swap(arr,(lenth)>>1,lenth);
         }
+        return arr;
     }
 
     private static void swap(int[] arr, int i, int j) {
@@ -101,6 +191,13 @@ public class QuickSort {
         arr[i] = arr[j];
         arr[j] = tmp;
     }
-//https://blog.csdn.net/qq_36528114/article/details/78667034
+    //https://blog.csdn.net/qq_36528114/article/details/78667034
+    private static void print(int[] arr){
+        //注意Arrays.asList()返回的是一个被包装的List(实质是数组),所有对应的操作最后都会直接操作数组
+        //使用时，当传入基本数据类型的数组时，会出现小问题，会把传入的数组整个当作返回的List中的第一个元素
+        //这里使用Arrays.stream()
+        Arrays.stream(arr).forEach(System.out::print);
+        System.out.println();
+    }
 
 }

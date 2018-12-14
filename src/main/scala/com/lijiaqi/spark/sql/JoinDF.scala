@@ -4,7 +4,7 @@ import org.apache.spark.sql.SparkSession
 
 case class Person(id:Int, name: String, age: Int)
 case class Result(id:Int, result:Int)
-object SimpleApp {
+object JoinDF {
 
   def main(args: Array[String]): Unit = {
     val sqlContext = SparkSession.builder().appName("SimpleApp").master("local").getOrCreate()

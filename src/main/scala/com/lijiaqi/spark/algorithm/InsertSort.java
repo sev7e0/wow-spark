@@ -17,7 +17,8 @@ package com.lijiaqi.spark.algorithm;
 public class InsertSort {
 
     public static void main(String[] args) {
-        insertSortByBinarySearch(AlgorithmUtil.getRepeatArray());
+        TimerUtil timerUtil = new TimerUtil();
+        timerUtil.getTime();
     }
 
     private static void insertSort(int[] arr){
@@ -35,7 +36,9 @@ public class InsertSort {
         AlgorithmUtil.print(arr);
     }
     //优化后:二分插入排序
-    private static void insertSortByBinarySearch(int[] arr){
+    @Timer
+    private static void insertSortByBinarySearch(){
+        int[] arr = AlgorithmUtil.getRepeatArray();
         for (int i = 1; i < arr.length; i++) {
             //找到有序数列的起始位置
             int low = 0;
@@ -62,6 +65,5 @@ public class InsertSort {
         }
         AlgorithmUtil.print(arr);
     }
-
 
 }

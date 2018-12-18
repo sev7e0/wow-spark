@@ -30,4 +30,9 @@ public class AlgorithmUtil {
         arr[i] = arr[j];
         arr[j] = tmp;
     }
+
+    public static void main(String[] args) {
+        TimerUtil timerUtil = new TimerUtil();
+        timerUtil.getTime();
+    }
 }

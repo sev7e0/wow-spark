@@ -8,9 +8,7 @@ import java.util.*;
 import java.util.stream.LongStream;
 
 /**
- * Title:sparklearn
- * description:
- *
+ * @description:
  * @author: Lijiaqi
  * @version: 1.0
  * @create: 2018-12-18 16:57
@@ -18,7 +16,7 @@ import java.util.stream.LongStream;
 
 public class TimerUtil {
 
-    private TreeMap<String, Long> getTimeTable(){
+    private static TreeMap<String, Long> getTimeTable(){
         TreeMap<String, Long> treeMap = new TreeMap<>();
         String className = Thread.currentThread().getStackTrace()[3].getClassName();
         System.out.println("current class name is:["+className+"]");
@@ -46,7 +44,7 @@ public class TimerUtil {
         return treeMap;
     }
 
-    void printChart(){
+    static void printChart(){
         //value升序排列
         Map<String, Long> timeTable = sortByValue(getTimeTable());
         long max = timeTable.values().iterator().next();
@@ -56,7 +54,7 @@ public class TimerUtil {
             System.out.println(" method:"+a+"  time:"+b+"  relative efficiency:"+percent+"%");
         });
     }
-    private <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
+    private static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
         List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
         // desc order
         list.sort((o1, o2) -> (o2.getValue()).compareTo(o1.getValue()));

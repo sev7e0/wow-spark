@@ -2,9 +2,7 @@ package com.lijiaqi.spark.algorithm;
 
 
 /**
- * Title:sparklearn
- * description:
- *
+ * @description:
  * @author: Lijiaqi
  * @version: 1.0
  * @create: 2018-12-11 14:56

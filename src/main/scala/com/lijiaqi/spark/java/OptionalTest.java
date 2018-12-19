@@ -57,11 +57,11 @@ public class OptionalTest {
         System.out.println(ZonedDateTime.now());
 
         final LocalDateTime from = LocalDateTime.of( 2017, Month.APRIL, 16, 0, 0, 0 );
-        final LocalDateTime to = LocalDateTime.of( 2018, Month.APRIL, 16, 23, 59, 59 );
+        final LocalDateTime to = LocalDateTime.of( 2017, Month.APRIL, 16, 23, 59, 59 );
 
         final Duration duration = Duration.between( from, to );
         System.out.println( "Duration in days: " + duration.toDays() );
-        System.out.println( "Duration in hours: " + duration.toHours() );
+        System.out.println( "Duration in hours: " + duration.toNanos());
 
         //java8 自带base64算法
         String base64 = "Base64 finally in Java 8!";

@@ -1,11 +1,11 @@
 package com.lijiaqi.spark.algorithm;
 
-import javax.ws.rs.GET;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.*;
+import java.util.stream.LongStream;
 
 /**
  * Title:sparklearn
@@ -18,8 +18,9 @@ import java.util.Arrays;
 
 public class TimerUtil {
 
-    public void getTime(){
-        String className = Thread.currentThread().getStackTrace()[2].getClassName();
+    private TreeMap<String, Long> getTimeTable(){
+        TreeMap<String, Long> treeMap = new TreeMap<>();
+        String className = Thread.currentThread().getStackTrace()[3].getClassName();
         System.out.println("current class name is:["+className+"]");
         try {
             Class name = Class.forName(className);
@@ -36,16 +37,38 @@ public class TimerUtil {
                     }
                     LocalDateTime end = LocalDateTime.now();
                     Duration duration = Duration.between(start, end);
-                    System.out.println("method :"+method.getName()+" time:"+duration.toMillis());
+                    treeMap.put(method.getName(), duration.toMillis());
                 }
             });
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
+        return treeMap;
+    }
+
+    void printChart(){
+        //value升序排列
+        Map<String, Long> timeTable = sortByValue(getTimeTable());
+        long max = timeTable.values().iterator().next();
+        timeTable.forEach((String a, Long b) -> {
+            long percent = (b * 100)/ max;
+            LongStream.range(0, percent).mapToObj(c -> "=").forEach(System.out::print);
+            System.out.println(" method:"+a+"  time:"+b+"  relative efficiency:"+percent+"%");
+        });
+    }
+    private <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
+        List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
+        // desc order
+        list.sort((o1, o2) -> (o2.getValue()).compareTo(o1.getValue()));
+        Map<K, V> result = new LinkedHashMap<>();
+        for (Map.Entry<K, V> entry : list) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
     }
 
     public static void main(String[] args) {
         TimerUtil timerUtil = new TimerUtil();
-        timerUtil.getTime();
+        timerUtil.printChart();
     }
 }

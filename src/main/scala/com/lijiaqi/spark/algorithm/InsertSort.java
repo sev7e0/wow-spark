@@ -18,11 +18,12 @@ public class InsertSort {
 
     public static void main(String[] args) {
         TimerUtil timerUtil = new TimerUtil();
-        timerUtil.getTime();
+        timerUtil.printChart();
     }
 
-    private static void insertSort(int[] arr){
-
+    @Timer
+    private static void insertSort(){
+        int[] arr = AlgorithmUtil.getRepeatArray();
         for (int i = 1; i < arr.length; i++) {
             int temp = arr[i];
             int j;

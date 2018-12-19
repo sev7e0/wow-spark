@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class AlgorithmUtil {
 
     public static int[] getRepeatArray(){
-        return new int[]{1,5,4,7,3,25,5,5,6,6,6,6,5,5,6,6};
+        return new int[]{1,5,4,7,31,5,4,7,31,5,1,5,4,7,3,6,6,6,1,5,4,7,36,5,5,6,6};
     }
 
     public static void print(int[] arr){
@@ -33,6 +33,6 @@ public class AlgorithmUtil {
 
     public static void main(String[] args) {
         TimerUtil timerUtil = new TimerUtil();
-        timerUtil.getTime();
+        timerUtil.printChart();
     }
 }

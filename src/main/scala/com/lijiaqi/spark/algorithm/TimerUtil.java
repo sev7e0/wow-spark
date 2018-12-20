@@ -18,9 +18,11 @@ public class TimerUtil {
 
     private static TreeMap<String, Long> getTimeTable(){
         TreeMap<String, Long> treeMap = new TreeMap<>();
+        //获取到当前堆栈的信息,找到当前调用该方法的相关信息
         String className = Thread.currentThread().getStackTrace()[3].getClassName();
         System.out.println("current class name is:["+className+"]");
         try {
+            //通过反射获取当被添加注解的方法并执行
             Class name = Class.forName(className);
             Object instance = name.newInstance();
             Method[] declaredMethods = name.getDeclaredMethods();

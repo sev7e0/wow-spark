@@ -15,6 +15,10 @@ public class AlgorithmUtil {
         return new int[]{1,5,4,7,31,5,4,7,31,5,1,5,4,7,3,6,6,6,1,5,4,7,36,5,5,6,6};
     }
 
+    public static int[] getShortArray(){
+        return new int[]{5,1,4,7,31};
+    }
+
     public static void print(int[] arr){
         //注意Arrays.asList()返回的是一个被包装的List(实质是数组),所有对应的操作最后都会直接操作数组
         //使用时，当传入基本数据类型的数组时，会出现小问题，会把传入的数组整个当作返回的List中的第一个元素

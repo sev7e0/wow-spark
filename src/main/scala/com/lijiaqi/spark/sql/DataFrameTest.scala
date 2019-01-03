@@ -10,7 +10,7 @@ import org.apache.spark.sql.{Row, SparkSession}
   * @create: 2019-01-02 23:57
   **/
 
-object DataSetTest {
+object DataFrameTest {
   case class Person( name: String, age: Int)
   def main(args: Array[String]): Unit = {
     val sparkSession = SparkSession.builder().appName("DataSetTest")
@@ -21,7 +21,7 @@ object DataSetTest {
     /**
       * 第一种方式，通过person对象
       */
-    val personaF = sparkSession.sparkContext.textFile("/Users/sev7e0/tools/spark-2.4.0-bin-hadoop2.6/examples/src/main/resources/people.txt")
+    val personaF = sparkSession.sparkContext.textFile("src/main/resources/sparkresource/people.txt")
       .map(_.split(","))
       .map(attr => Person(attr(0), attr(1).trim.toInt))
       .toDF()
@@ -53,7 +53,7 @@ object DataSetTest {
       .map(filedName => StructField(filedName, StringType, nullable = true))
     val structType = StructType(fields)
 
-    val personRDD = sparkSession.sparkContext.textFile("/Users/sev7e0/tools/spark-2.4.0-bin-hadoop2.6/examples/src/main/resources/people.txt")
+    val personRDD = sparkSession.sparkContext.textFile("src/main/resources/sparkresource/people.txt")
       .map(_.split(","))
       //将RDD转换为行
       .map(attr => Row(attr(0), attr(1).trim))

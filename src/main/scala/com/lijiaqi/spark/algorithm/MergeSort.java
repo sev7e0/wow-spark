@@ -45,6 +45,7 @@ public class MergeSort {
         int left = first;
         int right = mid+1;
         int index = 0;
+        //从两个数组中依次比较,放入到temp中,知道其中一个数组遍历结束
         while (left<=mid && right<=last){
             if (arr[left]>=arr[right]){
                 temp[index++] = arr[right++];
@@ -52,10 +53,11 @@ public class MergeSort {
                 temp[index++] = arr[left++];
             }
         }
-
+        //左边数组为遍历结束,则将数组中剩余的元素全部加入到temp中
         while (left<=mid){
             temp[index++] = arr[left++];
         }
+        //右边同理
         while (right<=last){
             temp[index++] = arr[right++];
         }

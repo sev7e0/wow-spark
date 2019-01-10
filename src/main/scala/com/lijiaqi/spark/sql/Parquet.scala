@@ -2,6 +2,21 @@ package com.lijiaqi.spark.sql
 
 import org.apache.spark.sql.SparkSession
 
+
+/**
+  *  1.parquet作为一种存储文件格式，其中包括了数据的结构信息，可以由其他类型的数据文件生成
+  *  2.分区发现功能，可以指定parquet或其他包含了结构信息的数据文件的指定列作为分区，进行读取
+  *  3.模式合并，spark提供的自动发现并合并parquet文件的相同列，但操作比较消耗性能，spark1.5以后默认关闭
+  *  4.hive元数据的parquet文件和spark table的parquet文件相互装换
+  *  两点需要注意：
+  *   Hive is case insensitive, while Parquet is not
+  *   Hive considers all columns nullable, while nullability in Parquet is significant
+  *  5.元数据表的更新（在外部有更新进行后）
+  *    spark.catalog.refreshTable("my_table")
+  *  6.相关配置
+  *     https://spark.apache.org/docs/latest/sql-data-sources-parquet.html
+  */
+
 /**
   * @program: spark-learn
   * @description:

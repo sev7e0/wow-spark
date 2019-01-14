@@ -47,9 +47,6 @@ object LoadSaveFunction {
     //对于生成指定文件可以指定key进行分区
     users.write.partitionBy("favorite_color").format("parquet").mode(saveMode = "SaveMode.Overwrite")
       .save("namesPartitionByColor.parquet")
-
-
-
   }
 
 }

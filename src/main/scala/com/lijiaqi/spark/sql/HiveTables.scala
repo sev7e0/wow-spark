@@ -2,7 +2,7 @@ package com.lijiaqi.spark.sql
 
 import java.io.File
 
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{Row, SaveMode, SparkSession}
 
 /**
   * @program: spark-learn
@@ -35,6 +35,27 @@ object HiveTables {
     sql("select * from src").show()
     sql("select COUNT(*) FROM src").show()
 
+    val keyDF = sql("select key, value from src where key < 10 order by key")
+
+    val mapDF = keyDF.map {
+      case Row(key: Int, value: String) => s"Key: $key, Value: $value"
+    }
+    mapDF.show()
+
+    //可以将数据帧和hive中的数据进行join
+    val recordDF = sparkSession.createDataset((1 to 100).map(i => Record(i,s"val_$i")))
+    recordDF.createOrReplaceTempView("records")
+
+    sparkSession.sql("SELECT * FROM records r JOIN src s ON r.key = s.key").show()
+
+
+
+    sql("CREATE TABLE hive_records(key int, value string) STORED AS PARQUET")
+    // Save DataFrame to the Hive managed table
+    val df = sparkSession.table("src")
+    df.write.mode(SaveMode.Overwrite).saveAsTable("hive_records")
+    // After insertion, the Hive managed table has data now
+    sql("SELECT * FROM hive_records").show()
   }
 
 }

@@ -49,13 +49,26 @@ object HiveTables {
     sparkSession.sql("SELECT * FROM records r JOIN src s ON r.key = s.key").show()
 
 
-
-    sql("CREATE TABLE hive_records(key int, value string) STORED AS PARQUET")
+    //使用hql语法而不是spark sql本机语法创建一个hive管理的parquet
+    sql("CREATE TABLE IF NOT EXISTS hive_records(key int, value string) STORED AS PARQUET")
     // Save DataFrame to the Hive managed table
     val df = sparkSession.table("src")
-    df.write.mode(SaveMode.Overwrite).saveAsTable("hive_records")
-    // After insertion, the Hive managed table has data now
+    df.write.mode("overwrite").saveAsTable("hive_records")
+//    // After insertion, the Hive managed table has data now
     sql("SELECT * FROM hive_records").show()
+
+
+    val dataDir = "src/main/resources/hive_records/"
+
+    sparkSession.range(10).write.mode("overwrite").parquet(dataDir)
+    sql(s"CREATE EXTERNAL TABLE IF NOT EXISTS hive_ints(key int) STORED AS PARQUET LOCATION '$dataDir'")
+
+    val hiveDF = sql("select * from hive_ints")
+    hiveDF.show()
+
+
+    sparkSession.stop()
+
   }
 
 }

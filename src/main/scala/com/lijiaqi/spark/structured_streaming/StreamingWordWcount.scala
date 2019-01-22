@@ -7,7 +7,6 @@ object StreamingWordWcount {
 
   def main(args: Array[String]): Unit = {
     val spark = SparkSession.builder()
-      .master("local")
       .appName("StreamingWordWcount")
       .getOrCreate()
 
@@ -20,6 +19,9 @@ object StreamingWordWcount {
       .option("host", "172.23.7.72")
       .option("port", 9999)
       .load()
+
+    line.isStreaming
+    line.printSchema()
 
     val word = line.as[String].flatMap(_.split(" "))
 

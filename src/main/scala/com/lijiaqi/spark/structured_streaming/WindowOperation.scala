@@ -4,6 +4,7 @@ import java.sql.Timestamp
 
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
+import org.apache.spark.sql.streaming.OutputMode
 object WindowOperation {
 
   def main(args: Array[String]): Unit = {
@@ -44,7 +45,7 @@ object WindowOperation {
       , $"word").count().orderBy("window")
 
     val query = windowCount.writeStream
-      .outputMode("complete")
+      .outputMode(OutputMode.Complete())
       .format("console")
       .option("truncate", "false")
       .start()

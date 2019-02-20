@@ -30,6 +30,32 @@ object JoinOperations {
     val streamDF1 = session.readStream.load()
     val streamDF2 = session.readStream.load()
 
+    // 默认join使用内连接方式
+    // 在事件事件上使用水印
+    val impressionWithWaterMarker = streamDF1.withWatermark("impressionTime","2 hours")
+    val clickWihtWaterMarker = streamDF2.withWatermark("clickTime", "3 hours")
+
+    /**
+      * 使用内连接时的注意事项:
+      * 1. 在两个输入上定义水印延迟，以便引擎知道输入延迟的程度(类似于流聚合)
+      * 2. 定义一个跨两个输入的事件时间约束，这样引擎就可以知道当一个输入的旧行与另一个输入匹配时不需要(即不满足时间约束)。这个约束可以用两种方法中的一种来定义。
+      *   Time range join conditions (e.g. ...JOIN ON leftTime BETWEEN rightTime AND rightTime + INTERVAL 1 HOUR),
+      *   Join on event-time windows (e.g. ...JOIN ON leftTimeWindow = rightTimeWindow).
+      */
+    import org.apache.spark.sql.functions.expr
+    impressionWithWaterMarker.join(clickWihtWaterMarker, expr("""   clickAdId = impressionAdId AND
+                                                                   clickTime >= impressionTime AND
+                                                                   clickTime <= impressionTime + interval 1 hour"""))
+
+    /**
+      * 对于外链接,是一定要指定waterMarker和event-time,这是为了防止产生Null结果,流处理引擎必须知道输入流在何时不再需要去匹配.
+      */
+    impressionWithWaterMarker.join(clickWihtWaterMarker, expr("""   clickAdId = impressionAdId AND
+                                                                   clickTime >= impressionTime AND
+                                                                   clickTime <= impressionTime + interval 1 hour"""),
+      //指定join类型
+      joinType = "leftOuter")
+
 
   }
 }

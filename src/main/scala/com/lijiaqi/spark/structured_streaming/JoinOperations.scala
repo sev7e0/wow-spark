@@ -56,6 +56,22 @@ object JoinOperations {
       //指定join类型
       joinType = "leftOuter")
 
+    /**
+      * Caveats:
+      *   外部空结果将生成一个延迟，该延迟取决于指定的水印延迟和时间范围条件。这是因为引擎必须等待那么长的时间来确保没有匹配，
+      *     并且将来也不会有更多匹配。
+      *   在微批处理引擎的当前实现中，在微批处理的最后会进行水印的高级处理，下一个微批处理使用更新后的水印来清理状态并输出外部结果。
+      *     因为我们只在需要处理新数据时触发微批处理，所以如果流中没有接收到新数据，外部结果的生成可能会延迟。简而言之，
+      *     如果正在连接的两个输入流中的任何一个在一段时间内不接收数据，外部(两种情况，左或右)输出可能会延迟。
+      */
+    /**
+      * notes:
+      *   1.join操作可以串联,df1.join(df2).join(df3)....
+      *   2.截止2.3只能在query中使用append output模式中使用join,不支持其他
+      *   3.截止2.3之前有一些操作不能在join操作之前使用
+      *     Cannot use streaming aggregations before joins.
+      *     Cannot use mapGroupsWithState and flatMapGroupsWithState in Update mode before joins.
+      */
 
   }
 }

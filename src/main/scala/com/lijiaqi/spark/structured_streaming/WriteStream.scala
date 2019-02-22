@@ -83,7 +83,13 @@ object WriteStream {
       .outputMode("complete")
       .queryName("device")
       .start()
+    //根据生成的table进行查询
     session.sql("select * from device").show()
+
+    /**
+      * To Be Continued
+      * http://spark.apache.org/docs/latest/structured-streaming-programming-guide.html#using-foreach-and-foreachbatch
+      */
 
 
   }

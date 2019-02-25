@@ -1,6 +1,7 @@
 package com.lijiaqi.spark.structured_streaming
 
-import org.apache.spark.sql.SparkSession
+import com.lijiaqi.spark.sql.DataSetTest.Person
+import org.apache.spark.sql.{Dataset, ForeachWriter, Row, SparkSession}
 
 /**
   * no support for execution
@@ -87,9 +88,31 @@ object WriteStream {
     session.sql("select * from device").show()
 
     /**
-      * To Be Continued
-      * http://spark.apache.org/docs/latest/structured-streaming-programming-guide.html#using-foreach-and-foreachbatch
+      * Foreach Sink
+      *
+      * ForeachBatch 允许指定在流查询的每个微批处理的输出数据上执行的函数。
       */
+    streamDF.writeStream.foreachBatch((a,b)=>{
+      // 打印出每个微批
+      a.show()
+      print(b)
+    })
+
+    /**
+      *
+      */
+    streamDF.writeStream.foreach(new ForeachWriter[Row] {
+      override def open(partitionId: Long, epochId: Long): Boolean = {
+        //打开连接
+        true
+      }
+      override def process(value: Row): Unit = {
+        //处理过程
+      }
+      override def close(errorOrNull: Throwable): Unit = {
+        //关闭连接
+      }
+    }).start()
 
 
   }

@@ -99,7 +99,16 @@ object WriteStream {
     })
 
     /**
+      * 当foreachBatch不能满足时(不存在对应的批处理data writer,或者连续处理模式),就可以将处理逻辑使用foreach代替
+      * foreach参数指定了ForeachWriter抽象类,该抽象类中提供了三个抽象方法,open,process,close,需要子类实现,
       *
+      * note:
+      *   1.每个ForeachWriter实现的副本针对了每一次遍历的partition(分布式情况下产生的一个数据分区)
+      *   2.该对象必须实现serializable,因为每个任务将获得所提供对象的一个新的序列化反序列化副本。
+      *   3.每一个partition对应了一个id,每个Batch也对应了一个epoch_id,方法调用顺序为open->process->close
+      *   4.只有在open成功返回后才可以调用close,除非jvm或者python中途崩溃
+      *
+      * partition_id, epoch_id主要是为了保证exactly-once语义,但如果在连续模式(continuous mode)下则无法保证
       */
     streamDF.writeStream.foreach(new ForeachWriter[Row] {
       override def open(partitionId: Long, epochId: Long): Boolean = {
@@ -114,7 +123,40 @@ object WriteStream {
       }
     }).start()
 
+    /**
+      * Triggers:
+      *   1.default:在流数据查询中如果未指定trigger类型,则使用默认方式micro-batch mode进行,每个micro-batch在前一个micro-batch完成后立即执行
+      *   2.fixed interval micro-batch:查询以micro-batch模式运行,根据设定的间隔进行触发
+      *     如果前一个提前完成,这下一个micro-batch将会在指定的时间间隔后执行
+      *     如果前一个超过了时间间隔未完成,则下一个会在前一个执行完成后立即执行
+      *     如果没有数据到达,不会启动micro-batch
+      *   3.one-time micro-batch:
+      *   4.Continuous with fixed checkpoint interval:查询将以新的低延迟连续处理模式执行
+      */
+    import org.apache.spark.sql.streaming.Trigger
 
+    //不指定trigger的情况下使用default
+    streamDF.writeStream
+      .format("console")
+      .start()
+
+    //micro-batch设置为2秒间隔
+    streamDF.writeStream
+      .format("console")
+      .trigger(Trigger.ProcessingTime("2 seconds"))
+      .start()
+
+    //one-time trigger
+    streamDF.writeStream
+      .format("console")
+      .trigger(Trigger.Once())
+      .start()
+
+    //具有一秒检查点间隔的连续触发器
+    streamDF.writeStream
+      .format("console")
+      .trigger(Trigger.Continuous("1 seconds"))
+      .start()
   }
 
 }

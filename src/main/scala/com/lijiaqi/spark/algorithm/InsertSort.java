@@ -15,8 +15,7 @@ package com.lijiaqi.spark.algorithm;
 public class InsertSort {
 
     public static void main(String[] args) {
-        TimerUtil timerUtil = new TimerUtil();
-        timerUtil.printChart();
+        TimerUtil.printChart();
     }
 
     @Timer

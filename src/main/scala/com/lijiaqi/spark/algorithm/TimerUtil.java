@@ -36,8 +36,7 @@ public class TimerUtil {
                         e.printStackTrace();
                     }
                     LocalDateTime end = LocalDateTime.now();
-                    Duration duration = Duration.between(start, end);
-                    treeMap.put(method.getName(), duration.toMillis());
+                    treeMap.put(method.getName(), Duration.between(start, end).toMillis());
                 }
             });
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {

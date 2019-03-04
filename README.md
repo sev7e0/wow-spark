@@ -1,4 +1,27 @@
 # sparklearn
+### :ant: StructuredStreaming练习
+
+```
+BasicOperation
+ContinuousProcessing
+JoinOperation
+JoinOperations
+StreamDeduplication
+StreamingQuery
+StreamingWordWcount
+WindowOperation
+WriteStream
+```
+
+### :swimming: SparkStreaming练习
+
+```
+DiscretizedStreams
+InitializingStreamingContext
+NetworkWordCount
+TransformationDStream
+```
+
 ### :book: Spark日常练习
 
 :heavy_check_mark:已实现:heavy_multiplication_x:未实现:heavy_exclamation_mark:未完成

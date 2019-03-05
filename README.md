@@ -13,7 +13,7 @@ WindowOperation
 WriteStream
 ```
 
-### :swimming: SparkStreaming练习
+### :swimmer: SparkStreaming练习
 
 ```
 DiscretizedStreams

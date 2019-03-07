@@ -18,6 +18,7 @@ object TransformationDStream {
     val conf: SparkConf = new SparkConf().setMaster("local").setAppName("TransformationDStream")
     val streamingContext = new StreamingContext(conf, Seconds(5))
 
+    //使用updateStateByKey 需要配置checkpoint目录详细请参考 http://spark.apache.org/docs/latest/streaming-programming-guide.html#checkpointing
     streamingContext.checkpoint("src/main/resources/sparkresource/")
 
     /**
@@ -26,7 +27,7 @@ object TransformationDStream {
     val lines= streamingContext.socketTextStream("localhost",8888)
     /**
       * textFileStream使用的注意事项:
-      *   SparkStreaming需要读取流式的数据，而不能直接从文件夹中创建。只能接受流式数据,你可以使用echo命令进行写入数据,
+      *   SparkStreaming需要读取流式的数据，而不能直接从文件夹中创建文件写入数据。你可以使用echo命令进行写入数据,
       *   这样就能读取到数据的变化了.(echo aaa > a.txt)
       */
 //    val lines = streamingContext.textFileStream(args(1))

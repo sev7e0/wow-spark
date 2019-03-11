@@ -59,15 +59,20 @@ object TransformationsDStream {
     /**
       * 在SparkStreaming中支持了两种join操作
       */
-    // 1.Stream-Stream Join
-    //val stream1: DStream[String, String] = ...
-    //val stream2: DStream[String, String] = ...
-    //val joinedStream = stream1.join(stream2)
+    /**
+      * 1.Stream-Stream Join
+      * val stream1: DStream[String, String] = ...
+      * val stream2: DStream[String, String] = ...
+      * val joinedStream = stream1.join(stream2)
+      */
+    /**
+      * 2.Stream-DataSet Join
+      * val dataset: RDD[String, String] = ...
+      * val windowedStream = stream.window(Seconds(20))...
+      * val joinedStream = windowedStream.transform { rdd => rdd.join(dataset) }
+      * 和上边transform提到的一样,你可以动态修改dataset,因为该操作是固定时间间隔触发,当数据集修改后将会使用最新的数据集
+       */
 
-    // 2.Stream-DataSet Join
-    //val dataset: RDD[String, String] = ...
-    //val windowedStream = stream.window(Seconds(20))...
-    //val joinedStream = windowedStream.transform { rdd => rdd.join(dataset) }
     context.start()
 
     context.awaitTermination()

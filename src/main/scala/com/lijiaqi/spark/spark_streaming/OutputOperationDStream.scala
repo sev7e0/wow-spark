@@ -103,8 +103,10 @@ object createNewConnectionPool{
   lazy val getConnect = new createNewConnection
   def returnConnection(connect:createNewConnection) = ???
 }
+
 class createNewConnectionPool{
 }
+
 class createNewConnection extends Serializable {
   def close(): Unit = ???
 

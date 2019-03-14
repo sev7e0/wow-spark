@@ -9,7 +9,7 @@ import org.apache.spark.util.LongAccumulator
 
 /**
   * @program: spark-learn
-  * @description:
+  * @description: http://spark.apache.org/docs/latest/streaming-programming-guide.html#accumulators-broadcast-variables-and-checkpoints
   * @author: Lijiaqi
   * @create: 2019-03-13 14:46
   **/

@@ -1,51 +1,25 @@
-# sparklearn
-### :ant: StructuredStreaming练习
+## sparklearn
 
-```
-BasicOperation
-ContinuousProcessing
-JoinOperation
-JoinOperations
-StreamDeduplication
-StreamingQuery
-StreamingWordWcount
-WindowOperation
-WriteStream
-```
+#### :book: [Spark][spark]
 
-### :swimmer: SparkStreaming练习
 
-```
-DiscretizedStreams
-InitializingStreamingContext
-NetworkWordCount
-TransformationDStream
-```
+#### :swimmer: [Spark SQL][sql]
 
-### :book: Spark日常练习
 
-:heavy_check_mark:已实现:heavy_multiplication_x:未实现:heavy_exclamation_mark:未完成
+#### :ant: [StructuredStreaming][structure]
 
-WordCount:point_right:java:heavy_check_mark:scala:heavy_multiplication_x:
 
-LinesCount:point_right:java:heavy_check_mark:scala:heavy_check_mark:
+#### :swimmer: [SparkStreaming][streaming]
 
-Transformation:point_right:java:heavy_check_mark:scala:heavy_check_mark:
-include:hammer:map、flatMap、groupByKey、filter、join、cogroup
 
-Action:point_right:java:heavy_check_mark:scala:heavy_check_mark:
-include:hammer:reduce、count、take、collect
-
-Broadcast&Accumulator:point_right:java:heavy_check_mark:scala:heavy_check_mark:
-
-SecondarySort:point_right:java:heavy_check_mark:scala:heavy_check_mark:
-
-TopN:point_right:java:heavy_check_mark:scala:heavy_check_mark:
-
-Group TopN:point_right:java:heavy_check_mark:scala:heavy_multiplication_x:
-
-### :memo: Spark源码分析
+#### :memo: Spark source code
 
 Master
 
 Worker
+
+
+[spark]:https://github.com/sev7e0/spark-practice/tree/master/src/main/scala/com/lijiaqi/spark/core
+[sql]:https://github.com/sev7e0/spark-practice/tree/master/src/main/scala/com/lijiaqi/spark/sql
+[structure]:https://github.com/sev7e0/spark-practice/tree/master/src/main/scala/com/lijiaqi/spark/structured_streaming
+[streaming]:https://github.com/sev7e0/spark-practice/tree/master/src/main/scala/com/lijiaqi/spark/spark_streaming

@@ -1,7 +1,7 @@
 package com.lijiaqi.spark.spark_streaming
 
+import org.apache.spark.SparkConf
 import org.apache.spark.streaming.{Seconds, StreamingContext}
-import org.apache.spark.{SparkConf, SparkContext}
 
 object DiscretizedStreams {
 
@@ -58,8 +58,8 @@ object DiscretizedStreams {
 
     /**
       * receiver的可靠性:
-      *   由于输入源可能需要进行传输过的数据进行确认,例如像kafka,flume这种,还有的是不需要进行确认的例如普通的文件系统,
-      *   这使得receiver产生了两种情况:
+      * 由于输入源可能需要进行传输过的数据进行确认,例如像kafka,flume这种,还有的是不需要进行确认的例如普通的文件系统,
+      * 这使得receiver产生了两种情况:
       *     1.可靠的receiver:该receiver会在数据接收,并在spark中做好副本后返回确认信息.
       *     2.不可靠的receiver:该receiver不会返回确认信息,可用于不需要返回信息的数据源,或者为了简化实现逻辑使用给可靠的输入源(输入源本身就是可靠的,不需要确认)
       */

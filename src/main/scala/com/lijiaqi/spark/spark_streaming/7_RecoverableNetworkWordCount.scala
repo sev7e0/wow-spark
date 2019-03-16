@@ -1,11 +1,11 @@
 package com.lijiaqi.spark.spark_streaming
 
-import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.broadcast.Broadcast
 import org.apache.spark.rdd.RDD
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.{Seconds, StreamingContext, Time}
 import org.apache.spark.util.LongAccumulator
+import org.apache.spark.{SparkConf, SparkContext}
 
 /**
   * @program: spark-learn
@@ -24,9 +24,9 @@ object RecoverableNetworkWordCount {
 
     val linesDS = context.socketTextStream("localhost", 9999, StorageLevel.MEMORY_AND_DISK_2)
 
-    val wordsCounts = linesDS.flatMap(_.split(" ")).map(word=>(word, 1)).reduceByKey(_ + _)
+    val wordsCounts = linesDS.flatMap(_.split(" ")).map(word => (word, 1)).reduceByKey(_ + _)
 
-    wordsCounts.foreachRDD((rdd:RDD[(String, Int)], time: Time)=>{
+    wordsCounts.foreachRDD((rdd: RDD[(String, Int)], time: Time) => {
       val blackList = WordBlackList.getInstance(context.sparkContext)
 
       val accumulator = DropWordCounter.getInstance(context.sparkContext)
@@ -44,18 +44,17 @@ object RecoverableNetworkWordCount {
   }
 
 
-
 }
 
-object WordBlackList{
+object WordBlackList {
 
-  @volatile private var instance:Broadcast[Seq[String]] = _
+  @volatile private var instance: Broadcast[Seq[String]] = _
 
-  def getInstance(context:SparkContext): Broadcast[Seq[String]] ={
-    if (instance == null){
-      synchronized{
-        if (instance == null){
-          val blackList = Seq("a","b","c")
+  def getInstance(context: SparkContext): Broadcast[Seq[String]] = {
+    if (instance == null) {
+      synchronized {
+        if (instance == null) {
+          val blackList = Seq("a", "b", "c")
           instance = context.broadcast(blackList)
         }
       }
@@ -65,13 +64,13 @@ object WordBlackList{
 
 }
 
-object DropWordCounter{
+object DropWordCounter {
   @volatile private var instance: LongAccumulator = _
 
-  def getInstance(context: SparkContext): LongAccumulator ={
-    if (instance == null){
+  def getInstance(context: SparkContext): LongAccumulator = {
+    if (instance == null) {
       synchronized {
-        if (instance == null){
+        if (instance == null) {
           instance = context.longAccumulator("WordCount")
         }
       }

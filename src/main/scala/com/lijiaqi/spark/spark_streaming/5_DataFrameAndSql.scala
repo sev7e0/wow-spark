@@ -28,7 +28,7 @@ object DataFrameAndSql {
       * 在Streamingdata中你可以很轻松的使用DataFrame和sql,创建SparkSession时需要使用StreamingContext中的SparkContext创建，这样在重启任务
       * 时，才能够进行任务的恢复，本示例中加载了一个单例的SparkSession。
       */
-    words.foreachRDD(rdd=>{
+    words.foreachRDD(rdd => {
 
       val sparkSession = SparkSessionSingleton.getInstance(conf)
       import sparkSession.implicits._
@@ -59,15 +59,15 @@ object DataFrameAndSql {
 
 }
 
-object SparkSessionSingleton{
-  @transient private var instance:SparkSession= _
+object SparkSessionSingleton {
+  @transient private var instance: SparkSession = _
 
-  def getInstance(conf:SparkConf ):SparkSession={
-    if (instance.==(null)){
+  def getInstance(conf: SparkConf): SparkSession = {
+    if (instance.==(null)) {
       instance = SparkSession
-          .builder()
-          .config(conf)
-          .getOrCreate()
+        .builder()
+        .config(conf)
+        .getOrCreate()
     }
     instance
   }

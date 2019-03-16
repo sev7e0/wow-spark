@@ -18,17 +18,17 @@ object QueueStream {
 
     val queueDStream = ssc.queueStream(queue)
 
-    val mapDStream = queueDStream.map(m=>(m%10,1))
-    val reduceDStream = mapDStream.reduceByKey(_+_)
+    val mapDStream = queueDStream.map(m => (m % 10, 1))
+    val reduceDStream = mapDStream.reduceByKey(_ + _)
 
     reduceDStream.print(100)
 
     ssc.start()
 
     //随机创建RDD并将其推进queue中
-    for (_ <- 1 to  50){
-      queue.synchronized{
-        queue+=ssc.sparkContext.makeRDD(1 to scala.util.Random.nextInt(100), 10)
+    for (_ <- 1 to 50) {
+      queue.synchronized {
+        queue += ssc.sparkContext.makeRDD(1 to scala.util.Random.nextInt(100), 10)
       }
       Thread.sleep(1000)
     }

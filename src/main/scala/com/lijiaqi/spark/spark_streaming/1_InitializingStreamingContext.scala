@@ -7,8 +7,8 @@ object InitializingStreamingContext {
   def main(args: Array[String]): Unit = {
     /**
       * 相关参数:
-      *   setMaster:使用local是指定了本地运行模式,这只是为了本地测试,实际上,运行在集群上时,不应该在程序中采用硬编码的方式,而是在使用spark-submit时指定
-      *   setAppName:该名字是应用在集群的ui界面显示的名字
+      * setMaster:使用local是指定了本地运行模式,这只是为了本地测试,实际上,运行在集群上时,不应该在程序中采用硬编码的方式,而是在使用spark-submit时指定
+      * setAppName:该名字是应用在集群的ui界面显示的名字
       */
     val sparkConf = new SparkConf().setMaster("local").setAppName("InitializingStreamingContext")
 
@@ -18,10 +18,10 @@ object InitializingStreamingContext {
       * StreamingContext对象可以通过已经存在的SparkContext对象进行创建
       * 亦可以由SparkConf对象作为参数进行创建
       * 在设置批处理时间间隔时( Seconds(1)),一定要考虑到集群的性能,具体可以参考下面性能调优的连接
-      *   http://spark.apache.org/docs/latest/streaming-programming-guide.html#setting-the-right-batch-interval
+      * http://spark.apache.org/docs/latest/streaming-programming-guide.html#setting-the-right-batch-interval
       */
     val streamingContext = new StreamingContext(sparkContext, Seconds(1))
-//    val streamingContext = new StreamingContext(sparkConf, Seconds(1))
+    //    val streamingContext = new StreamingContext(sparkConf, Seconds(1))
 
     /**
       * 在定义好context对象后,接下来应该实现以下操作:

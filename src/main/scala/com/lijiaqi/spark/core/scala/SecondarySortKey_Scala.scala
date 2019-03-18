@@ -1,10 +1,10 @@
 package com.lijiaqi.spark.core.scala
 
-class SecondarySortKey(val first:Int,val second:Int) extends Ordered[SecondarySortKey] with Serializable {
+class SecondarySortKey(val first: Int, val second: Int) extends Ordered[SecondarySortKey] with Serializable {
   override def compare(that: SecondarySortKey): Int = {
-    if (this.first - that.first !=0){
+    if (this.first - that.first != 0) {
       this.first - that.first
-    }else{
+    } else {
       this.second - that.second
     }
   }

@@ -1,4 +1,5 @@
-package com.lijiaqi.spark.core
+package com.lijiaqi.spark.core.scala
+
 import org.apache.spark._
 
 //统计每行出现的次数scala版本
@@ -12,8 +13,8 @@ object LineCount_Scala {
 
     val lineRdd = context.textFile("file:///home/sev7e0/DataSets/linecount.txt")
 
-    val lineCount = lineRdd.map(line=>(line,1)).reduceByKey(_+_)
+    val lineCount = lineRdd.map(line => (line, 1)).reduceByKey(_ + _)
 
-    lineCount.foreach(line =>println(line._1+": "+line._2+" times"))
+    lineCount.foreach(line => println(line._1 + ": " + line._2 + " times"))
   }
 }

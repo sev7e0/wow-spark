@@ -1,4 +1,5 @@
-package com.lijiaqi.spark.core
+package com.lijiaqi.spark.core.scala
+
 import org.apache.spark.{SparkConf, SparkContext}
 
 object TransformationOperation_Scala {
@@ -8,29 +9,32 @@ object TransformationOperation_Scala {
     map(context)
   }
 
-  def map(context: SparkContext): Unit ={
-    val listRdd = Array(1,2,3,5,8,6)
-    context.parallelize(listRdd).map(_*2).foreach(println(_))
+  def map(context: SparkContext): Unit = {
+    val listRdd = Array(1, 2, 3, 5, 8, 6)
+    context.parallelize(listRdd).map(_ * 2).foreach(println(_))
   }
 
 
-  def filter(context: SparkContext): Unit ={
-    val listRdd = Array(1,2,3,5,8,6,7,8,9,10)
-        context.parallelize(listRdd).filter(_%2 != 0).foreach(println(_))
+  def filter(context: SparkContext): Unit = {
+    val listRdd = Array(1, 2, 3, 5, 8, 6, 7, 8, 9, 10)
+    context.parallelize(listRdd).filter(_ % 2 != 0).foreach(println(_))
   }
 
-  def flatMap(context: SparkContext): Unit ={
+  def flatMap(context: SparkContext): Unit = {
     val listRdd = Array("hello you ", "hello java", "hello leo")
     context.parallelize(listRdd).flatMap(_.split(" ")).foreach(println(_))
   }
-  def gropByKey(context: SparkContext): Unit ={
-        val listRdd = Array(new Tuple2[String, Integer]("class1", 50),
-          new Tuple2[String, Integer]("class1", 80),
-          new Tuple2[String, Integer]("class2", 65),
-          new Tuple2[String, Integer]("class3", 580),
-          new Tuple2[String, Integer]("class1", 75))
-        context.parallelize(listRdd).groupByKey().foreach(rdd=>{println(rdd._1);for(score <- rdd._2) println(score)})
-//        context.parallelize(listRdd)
+
+  def gropByKey(context: SparkContext): Unit = {
+    val listRdd = Array(new Tuple2[String, Integer]("class1", 50),
+      new Tuple2[String, Integer]("class1", 80),
+      new Tuple2[String, Integer]("class2", 65),
+      new Tuple2[String, Integer]("class3", 580),
+      new Tuple2[String, Integer]("class1", 75))
+    context.parallelize(listRdd).groupByKey().foreach(rdd => {
+      println(rdd._1); for (score <- rdd._2) println(score)
+    })
+    //        context.parallelize(listRdd)
   }
 
   def cogroup(context: SparkContext): Unit = {
@@ -53,7 +57,7 @@ object TransformationOperation_Scala {
       })
   }
 
-  def cogroups(context: SparkContext): Unit ={
+  def cogroups(context: SparkContext): Unit = {
     val scoreList = Array(new Tuple2[Integer, Integer](1, 25),
       new Tuple2[Integer, Integer](2, 89),
       new Tuple2[Integer, Integer](3, 100),
@@ -68,11 +72,12 @@ object TransformationOperation_Scala {
     context.parallelize(nameList)
       .cogroup(context.parallelize(scoreList))
       //scala中输入多行需要使用 { } 进行包裹，否则只能使用一行处理
-      .foreach(score=>{
-        println(score._1);
-        println(score._2._1);
-        println(score._2._2);
-        println("----------")})
+      .foreach(score => {
+      println(score._1);
+      println(score._2._1);
+      println(score._2._2);
+      println("----------")
+    })
 
   }
 }

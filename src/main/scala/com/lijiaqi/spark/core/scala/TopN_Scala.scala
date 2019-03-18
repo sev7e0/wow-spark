@@ -13,11 +13,11 @@ object TopN_Scala {
     val conf = new SparkConf().setAppName("topnScala").setMaster("local")
     val context = new SparkContext(conf)
 
-    val pairRdd = context.textFile("/Users/sev7e0/dataset/topn.txt").map(line=>Tuple2(Integer.valueOf(line), line))
+    val pairRdd = context.textFile("/Users/sev7e0/dataset/topn.txt").map(line => Tuple2(Integer.valueOf(line), line))
 
-    val integer = pairRdd.sortByKey(false).map(rdd=>rdd._1).take(3)
+    val integer = pairRdd.sortByKey(false).map(rdd => rdd._1).take(3)
 
-    integer.foreach(integer=> println(s"integer = $integer"))
+    integer.foreach(integer => println(s"integer = $integer"))
 
 
   }

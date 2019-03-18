@@ -14,8 +14,9 @@ class SecondarySort_Scala {
         new SecondarySortKey(line.split(" ")(0).toInt, line.split(" ")(1).toInt),
         line)
     }
-    mapRdd.sortByKey().map(rdd=>rdd._2).foreach(rdd =>{
-      println(s"rdd = ${rdd}")})
+    mapRdd.sortByKey().map(rdd => rdd._2).foreach(rdd => {
+      println(s"rdd = ${rdd}")
+    })
 
   }
 }

@@ -21,9 +21,14 @@ object LoadSaveFunction {
       .appName("LoadSaveFunction")
       .getOrCreate()
 
+    val users = session.read.load("/Users/sev7e0/workspace/idea-workspace/sparklearn/src/main/resources/sparkresource/users.parquet")
+    users.select("name","favorite_color").write.mode(saveMode = "overwrite").save("namesAndFavColors.parquet")
 
-    val users = session.read.load("src/main/resources/sparkresource/users.parquet")
-    users.select("name","favorite_color").write.mode(saveMode = "SaveMode.Overwrite").save("namesAndFavColors.parquet")
+    /**
+      * load中的路径可以使用文件夹，但是只能存在一种类型，就是format中指定的类型
+      */
+    val orcDF = session.read.format("orc").load("/Users/sev7e0/workspace/idea-workspace/sparklearn/src/main/resources/spark resource")
+    orcDF.show()
 
 //    session.sqlContext
 //    users.write.format("orc")
@@ -33,19 +38,19 @@ object LoadSaveFunction {
 
     //k可以指定格式名称，从任意数据源进行转换
     val peopleDS = session.read.json("src/main/resources/sparkresource/people.json")
-    peopleDS.select("name","age").write.mode(saveMode = "SaveMode.Overwrite").format("parquet").save("nameAndAge.parquet")
+    peopleDS.select("name","age").write.mode(saveMode = "overwrite").format("parquet").save("nameAndAge.parquet")
 
     //从指定格式转换为另一种格式
     val dataFrameCSV = session.read.option("sep",";").option("inferSchema","true")
       .option("header","true").csv("src/main/resources/sparkresource/people.csv")
-    dataFrameCSV.select("name","age").write.mode(saveMode = "SaveMode.Overwrite").format("json").save("csvToJson.json")
+    dataFrameCSV.select("name","age").write.mode(saveMode = "overwrite").format("json").save("csvToJson.json")
 
     //直接在文件中执行SQL
     val fromParquetFile = session.sql("SELECT * FROM parquet.`src/main/resources/sparkresource/users.parquet`")
-    fromParquetFile.show()
+//    fromParquetFile.show()
 
     //对于生成指定文件可以指定key进行分区
-    users.write.partitionBy("favorite_color").format("parquet").mode(saveMode = "SaveMode.Overwrite")
+    users.write.partitionBy("favorite_color").format("parquet").mode(saveMode = "overwrite")
       .save("namesPartitionByColor.parquet")
   }
 

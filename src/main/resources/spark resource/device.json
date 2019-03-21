@@ -1,0 +1,8 @@
+{"device":"Michael","deviceType": "people","signal": 15,"time": "2018-01-02 15:20"}
+{"device":"jack","deviceType": "people","signal": 50,"time": "2018-01-02 15:20"}
+{"device":"lenovo","deviceType": "computer","signal": 100,"time": "2018-01-02 15:20"}
+{"device":"thunisoft","deviceType": "soft","signal": 30,"time": "2018-01-02 15:20"}
+{"device":"book","deviceType": "soft","signal": 18,"time": "2018-01-02 15:20"}
+{"device":"apache","deviceType": "soft","signal": 60,"time": "2018-01-02 15:20"}
+{"device":"spark","deviceType": "soft","signal": 20,"time": "2018-01-02 15:20"}
+{"device":"redmi","deviceType": "phone","signal": 10,"time": "2018-01-02 15:20"}

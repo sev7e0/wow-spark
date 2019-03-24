@@ -19,8 +19,16 @@ object UseEither {
       case Right(source) => source.getLines().foreach(println)
     }
 
+    println(averageLineCount(url, url))
+
   }
 
+  def averageLineCount(url1:URL, url2:URL): Unit ={
+    for {
+      content <- getContent(url1).right
+      content1 <- getContent(url2).right
+    }yield (content.getLines().size + content1.getLines().size)/2
+  }
 
   /**
     *

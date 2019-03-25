@@ -5,12 +5,7 @@ import java.net.URL
 
 import scala.io.Source
 
-/**
-  * @program: spark-learn
-  * @description:
-  * @author: Lijiaqi
-  * @create: 2019-03-22 16:29
-  **/
+
 object UseEither {
   def main(args: Array[String]): Unit = {
     val url = new URL("http://www.google.com")
@@ -18,16 +13,31 @@ object UseEither {
       case Left(message) => println(message)
       case Right(source) => source.getLines().foreach(println)
     }
+    val url1 = new URL("http://www.baidu.com")
+    println(averageLineCount(url1, url1))
 
-    println(averageLineCount(url, url))
+    println(averageLineCount1(url1, url1))
 
   }
 
-  def averageLineCount(url1:URL, url2:URL): Unit ={
-    for {
+
+  def averageLineCount1(url1:URL, url2:URL):Int = {
+    var product = 0
+     getContent(url1).right.map(a =>
+       getContent(url2).right.map(b =>
+         product = (a.getLines().size + b.getLines().size) >> 1
+       )
+     )
+    product
+  }
+
+
+  def averageLineCount(url1:URL, url2:URL): Either[String, Int] ={
+    val a = for {
       content <- getContent(url1).right
       content1 <- getContent(url2).right
     }yield (content.getLines().size + content1.getLines().size)/2
+    a
   }
 
   /**

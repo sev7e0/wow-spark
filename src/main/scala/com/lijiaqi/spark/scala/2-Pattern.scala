@@ -1,11 +1,6 @@
 package com.lijiaqi.spark.scala
 
-/**
-  * @program: spark-learn
-  * @description:
-  * @author: Lijiaqi
-  * @create: 2019-03-19 15:03
-  **/
+
 object Pattern {
   def main(args: Array[String]): Unit = {
 

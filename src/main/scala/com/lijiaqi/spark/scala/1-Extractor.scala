@@ -1,14 +1,9 @@
 package com.lijiaqi.spark.scala
 
-/**
-  * @program: spark-learn
-  * @description:
-  * @author: Lijiaqi
-  * @create: 2019-03-19 15:43
-  **/
+
 object Extractor {
   def main(args: Array[String]): Unit = {
-    //测试第一种提取器 输出hi common user lee
+    //测试第一种提取器 输出hi comon user lee
     val lee = new CommonUser("lee")
     lee match {
       case CommonUser(name) => println("hi common user "+lee.name)

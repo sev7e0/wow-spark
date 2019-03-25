@@ -4,14 +4,7 @@ import java.io.FileNotFoundException
 import scala.util.{Failure, Success, Try}
 import java.net.{MalformedURLException, URL}
 
-import scala.io.StdIn
 
-/**
-  * @program: spark-learn
-  * @description:
-  * @author: Lijiaqi
-  * @create: 2019-03-20 14:04
-  **/
 object ErrorHandling {
 
   def main(args: Array[String]): Unit = {

@@ -19,6 +19,11 @@ object UseFuture {
   case class WaterBoilingException(msg: String) extends Exception(msg)
   case class BrewingException(msg: String) extends Exception(msg)
 
+  /**
+    *  对future的理解，不同于java中的future，在java中future执行的计算结果需要等异步线程执行完后才可以获取到，获取结果时是阻塞的
+    *  在scala中使用了执行上下文*（ExecutiveContext）的概念，这样在future执行时也可以对其进行转换，只不过每一次
+    *  都是产生新的future，直到最终结果生成，不同点在与两种语言对结果的粒度控制。
+    */
   def main(args: Array[String]): Unit = {
 
     // 语句引入了一个全局的执行上下文，确保了隐式值的存在

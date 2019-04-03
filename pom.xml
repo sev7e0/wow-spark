@@ -137,7 +137,7 @@
           </execution>
         </executions>
         <configuration>
-          <scalaVersion>${scala.version}</scalaVersion>
+          <scalaVersion>2.14.1</scalaVersion>
           <args>
             <arg>-target:jvm-1.8</arg>
           </args>
@@ -153,15 +153,4 @@
       </plugin>
     </plugins>
   </build>
-  <!--<reporting>-->
-    <!--<plugins>-->
-      <!--<plugin>-->
-        <!--<groupId>org.scala-tools</groupId>-->
-        <!--<artifactId>maven-scala-plugin</artifactId>-->
-        <!--<configuration>-->
-          <!--<scalaVersion>${scala.version}</scalaVersion>-->
-        <!--</configuration>-->
-      <!--</plugin>-->
-    <!--</plugins>-->
-  <!--</reporting>-->
 </project>

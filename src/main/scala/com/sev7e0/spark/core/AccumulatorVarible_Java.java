@@ -9,7 +9,7 @@ import org.apache.spark.util.LongAccumulator;
 import java.util.Arrays;
 import java.util.List;
 
-public class AccumulatorVaribale_Java {
+public class AccumulatorVarible_Java {
 
     public static void main(String[] args) {
         SparkConf sparkConf = new SparkConf();
@@ -23,21 +23,10 @@ public class AccumulatorVaribale_Java {
 
         List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
-        JavaRDD<Integer> rdd = context.<Integer>parallelize(list);
+        JavaRDD<Integer> rdd = context.parallelize(list);
 
-//        rdd.foreach(new VoidFunction<Integer>() {
-//            @Override
-//            public void call(Integer integer) {
-//                accumulator.add(Long.valueOf(integer));
-//            }
-//        });
         //将上边代码改写为lambda风格
-        rdd.foreach(new VoidFunction<Integer>() {
-            @Override
-            public void call(Integer integer) throws Exception {
-                accumulator.add(Long.valueOf(integer));
-            }
-        });
+        rdd.foreach((VoidFunction<Integer>) integer -> accumulator.add(Long.valueOf(integer)));
         System.out.println(accumulator.value());
     }
 }

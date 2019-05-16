@@ -9,6 +9,7 @@
     <spark.version>2.4.0</spark.version>
     <hadoop.version>2.7.5</hadoop.version>
     <hbase.version>1.2.6</hbase.version>
+    <slf4j.version>1.7.21</slf4j.version>
   </properties>
 
   <dependencies>
@@ -124,6 +125,22 @@
       <groupId>io.delta</groupId>
       <artifactId>delta-core_2.11</artifactId>
       <version>0.1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <!--可以引入日志 @Slf4j注解-->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.16.22</version>
     </dependency>
   </dependencies>
 

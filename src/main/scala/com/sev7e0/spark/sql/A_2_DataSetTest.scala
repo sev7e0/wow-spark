@@ -9,7 +9,7 @@ import org.apache.spark.sql.SparkSession
   * @create: 2019-01-02 23:57
   **/
 
-object DataSetTest {
+object A_2_DataSetTest {
   case class Person( name: String, age: Int)
   def main(args: Array[String]): Unit = {
     val sparkSession = SparkSession.builder().appName("DataSetTest")

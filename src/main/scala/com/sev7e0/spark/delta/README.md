@@ -1,6 +1,10 @@
-#### :airplane: [Delta Lake][delta]
+## :airplane: Delta Lake
 
 [QuickStart][1]
+- 参考Delta Lake官方文档实现delta quickStart，具体内容参考[博客内容](http://blog.sev7e0.site/article/4)
+
+----------
+
 
 
 

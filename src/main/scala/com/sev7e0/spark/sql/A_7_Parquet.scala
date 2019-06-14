@@ -23,7 +23,7 @@ import org.apache.spark.sql.SparkSession
   * @author: Lijiaqi
   * @create: 2019-01-09 22:49
   **/
-object Parquet {
+object A_7_Parquet {
 
   def main(args: Array[String]): Unit = {
     val spark = SparkSession.builder().appName("ParquetTest")

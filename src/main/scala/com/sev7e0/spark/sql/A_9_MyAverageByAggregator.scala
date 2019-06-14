@@ -12,7 +12,7 @@ import org.apache.spark.sql.expressions.Aggregator
 
 case class Employee(name:String, salary:Long)
 case class Average(var sum:Long, var count:Long)
-object MyAverageByAggregator extends Aggregator[Employee, Average, Double]{
+object A_9_MyAverageByAggregator extends Aggregator[Employee, Average, Double]{
   override def zero: Average = Average(0L,0L)
 
   override def reduce(b: Average, a: Employee): Average = {
@@ -41,7 +41,7 @@ object MyAverageByAggregator extends Aggregator[Employee, Average, Double]{
     val dataFrame = sparkSession.read.json("src/main/resources/sparkresource/employees.json").as[Employee]
     dataFrame.show()
 
-    val salary_average = MyAverageByAggregator.toColumn.name("salary_average")
+    val salary_average = A_9_MyAverageByAggregator.toColumn.name("salary_average")
 
     val frame = dataFrame.select(salary_average)
     frame.show()

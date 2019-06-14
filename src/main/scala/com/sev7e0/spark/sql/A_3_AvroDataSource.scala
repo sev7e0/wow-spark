@@ -10,7 +10,7 @@ import org.apache.spark.sql.SparkSession
   *
   */
 
-object AvroDataSource {
+object A_3_AvroDataSource {
 
   def main(args: Array[String]): Unit = {
     val sparkSession = SparkSession.builder()

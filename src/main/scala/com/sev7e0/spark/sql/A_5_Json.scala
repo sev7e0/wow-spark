@@ -13,7 +13,7 @@ import org.apache.spark.sql.SparkSession
   * @author: Lijiaqi
   * @create: 2019-01-15 00:34
   **/
-object Json {
+object A_5_Json {
 
   def main(args: Array[String]): Unit = {
     val sparkSession = SparkSession.builder().appName("json")

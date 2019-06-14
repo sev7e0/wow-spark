@@ -15,7 +15,7 @@ import org.apache.spark.sql.SparkSession
   * @author: Lijiaqi
   * @create: 2019-01-08 01:01
   **/
-object LoadSaveFunction {
+object A_0_LoadSaveFunction {
   def main(args: Array[String]): Unit = {
     val session = SparkSession.builder().master("local")
       .appName("LoadSaveFunction")

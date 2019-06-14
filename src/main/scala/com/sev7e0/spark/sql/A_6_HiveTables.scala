@@ -10,7 +10,7 @@ import org.apache.spark.sql.{Row, SaveMode, SparkSession}
   * @author: Lijiaqi
   * @create: 2019-01-15 01:06
   **/
-object HiveTables {
+object A_6_HiveTables {
 
 
   case class Record(key: Int, value: String)

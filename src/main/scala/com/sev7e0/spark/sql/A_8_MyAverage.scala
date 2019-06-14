@@ -10,7 +10,7 @@ import org.apache.spark.sql.types._
   * @author: Lijiaqi
   * @create: 2019-01-03 23:57
   **/
-object MyAverage extends UserDefinedAggregateFunction{
+object A_8_MyAverage extends UserDefinedAggregateFunction{
   override def inputSchema: StructType = StructType(StructField("inputColumn",LongType)::Nil)
 
   override def bufferSchema: StructType = {
@@ -42,15 +42,15 @@ object MyAverage extends UserDefinedAggregateFunction{
   override def evaluate(buffer: Row): Any = buffer.getLong(0).toDouble / buffer.getLong(1)
 
   def main(args: Array[String]): Unit = {
-    val sparkSession = SparkSession.builder().appName("MyAverage")
+    val sparkSession = SparkSession.builder().appName("A_8_MyAverage")
       .master("local")
       .getOrCreate()
-    sparkSession.udf.register("MyAverage",MyAverage)
+    sparkSession.udf.register("A_8_MyAverage",A_8_MyAverage)
 
     val dataFrame = sparkSession.read.json("src/main/resources/sparkresource/employees.json")
     dataFrame.createOrReplaceTempView("employees")
 
-    val result = sparkSession.sql("select MyAverage(salary) as average_salary from employees")
+    val result = sparkSession.sql("select A_8_MyAverage(salary) as average_salary from employees")
     result.show()
   }
 }

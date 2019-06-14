@@ -2,7 +2,7 @@ package com.sev7e0.spark.structured_streaming
 
 import org.apache.spark.sql.SparkSession
 
-object JoinOperations {
+object A_2_JoinOperations {
 
   def main(args: Array[String]): Unit = {
     val session = SparkSession.builder()

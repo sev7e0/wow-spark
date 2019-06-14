@@ -3,7 +3,7 @@ package com.sev7e0.spark.structured_streaming
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.streaming.StreamingQueryListener
 
-object StreamingQuery {
+object A_4_StreamingQuery {
   def main(args: Array[String]): Unit = {
     val session = SparkSession.builder()
       .master("local")

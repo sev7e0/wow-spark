@@ -5,13 +5,13 @@ import java.sql.Timestamp
 import org.apache.spark.sql.types.{BooleanType, StringType, StructType, TimestampType}
 import org.apache.spark.sql.{Dataset, SparkSession}
 
-object BasicOperation {
+object A_1_BasicOperation {
 
   //DateTime要使用Timestamp  case类必须使用java.sql。在catalyst中作为TimestampType调用的时间戳
   case class DeviceData(device:String, deviceType:String, signal:Double, time:Timestamp)
   def main(args: Array[String]): Unit = {
     val spark = SparkSession.builder()
-      .appName(BasicOperation.getClass.getName)
+      .appName(A_1_BasicOperation.getClass.getName)
       .master("local")
       .getOrCreate()
     val timeStructType = new StructType().add("device", StringType)

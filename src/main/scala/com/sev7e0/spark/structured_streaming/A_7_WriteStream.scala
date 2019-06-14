@@ -1,16 +1,15 @@
 package com.sev7e0.spark.structured_streaming
 
-import com.sev7e0.spark.sql.DataSetTest.Person
-import org.apache.spark.sql.{Dataset, ForeachWriter, Row, SparkSession}
+import org.apache.spark.sql.{ForeachWriter, Row, SparkSession}
 
 /**
   * no support for execution
   */
-object WriteStream {
+object A_7_WriteStream {
 
   def main(args: Array[String]): Unit = {
     val session = SparkSession.builder()
-      .appName(WriteStream.getClass.getName)
+      .appName(A_7_WriteStream.getClass.getName)
       .master("local")
       .getOrCreate()
     val streamDF = session.readStream.load()
@@ -25,9 +24,9 @@ object WriteStream {
       */
     // File Sink ("orc", "json", "csv")
     streamDF.writeStream
-        .queryName("test")
-//      .trigger()
-        .outputMode("complete")
+      .queryName("test")
+      //      .trigger()
+      .outputMode("complete")
       .format("parquet")
       .option("path", "/")
       .partitionBy()
@@ -54,7 +53,7 @@ object WriteStream {
     /**
       * 一些sink不支持容错,不能保证数据的持久性,仅适合debug使用
       * 参考链接:
-      *   http://spark.apache.org/docs/latest/structured-streaming-programming-guide.html#output-sinks
+      * http://spark.apache.org/docs/latest/structured-streaming-programming-guide.html#output-sinks
       */
 
     val deviceDF = session.readStream.load()
@@ -66,8 +65,8 @@ object WriteStream {
 
     deviceDF.writeStream
       .format("parquet")
-      .option("checkpointLocation","/path/checkpoint/dir")
-      .option("path","/path/output/dir")
+      .option("checkpointLocation", "/path/checkpoint/dir")
+      .option("path", "/path/output/dir")
       .start()
 
     val aggregationDF = deviceDF.groupBy("device").count()
@@ -92,7 +91,7 @@ object WriteStream {
       *
       * ForeachBatch 允许指定在流查询的每个微批处理的输出数据上执行的函数。
       */
-    streamDF.writeStream.foreachBatch((a,b)=>{
+    streamDF.writeStream.foreachBatch((a, b) => {
       // 打印出每个微批
       a.show()
       print(b)
@@ -115,9 +114,11 @@ object WriteStream {
         //打开连接
         true
       }
+
       override def process(value: Row): Unit = {
         //处理过程
       }
+
       override def close(errorOrNull: Throwable): Unit = {
         //关闭连接
       }
@@ -127,9 +128,9 @@ object WriteStream {
       * Triggers:
       *   1.default:在流数据查询中如果未指定trigger类型,则使用默认方式micro-batch mode进行,每个micro-batch在前一个micro-batch完成后立即执行
       *   2.fixed interval micro-batch:查询以micro-batch模式运行,根据设定的间隔进行触发
-      *     如果前一个提前完成,这下一个micro-batch将会在指定的时间间隔后执行
-      *     如果前一个超过了时间间隔未完成,则下一个会在前一个执行完成后立即执行
-      *     如果没有数据到达,不会启动micro-batch
+      * 如果前一个提前完成,这下一个micro-batch将会在指定的时间间隔后执行
+      * 如果前一个超过了时间间隔未完成,则下一个会在前一个执行完成后立即执行
+      * 如果没有数据到达,不会启动micro-batch
       *   3.one-time micro-batch:
       *   4.Continuous with fixed checkpoint interval:查询将以新的低延迟连续处理模式执行
       */

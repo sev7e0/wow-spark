@@ -8,11 +8,11 @@ import org.apache.spark.sql.SparkSession
   * @author: Lijiaqi
   * @create: 2019-01-27 18:31
   **/
-object JoinOperation {
+object A_2_JoinOperation {
 
   def main(args: Array[String]): Unit = {
     val spark = SparkSession.builder()
-      .appName(JoinOperation.getClass.getName)
+      .appName(A_2_JoinOperation.getClass.getName)
       .master("local")
       .getOrCreate()
 

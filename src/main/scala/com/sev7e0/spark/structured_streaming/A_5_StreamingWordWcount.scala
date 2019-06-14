@@ -3,7 +3,7 @@ package com.sev7e0.spark.structured_streaming
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
 
-object StreamingWordWcount {
+object A_5_StreamingWordWcount {
 
   def main(args: Array[String]): Unit = {
     val spark = SparkSession.builder()

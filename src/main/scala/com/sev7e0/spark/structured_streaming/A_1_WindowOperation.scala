@@ -5,7 +5,7 @@ import java.sql.Timestamp
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.streaming.OutputMode
-object WindowOperation {
+object A_1_WindowOperation {
 
   def main(args: Array[String]): Unit = {
 
@@ -28,7 +28,7 @@ object WindowOperation {
 
     val spark = SparkSession.builder()
       .master("local")
-      .appName(WindowOperation.getClass.getName)
+      .appName(A_1_WindowOperation.getClass.getName)
       .getOrCreate()
     val lines = spark.readStream
       .format("socket")

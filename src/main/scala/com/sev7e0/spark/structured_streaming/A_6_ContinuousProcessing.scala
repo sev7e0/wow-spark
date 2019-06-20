@@ -19,7 +19,7 @@ object A_6_ContinuousProcessing {
       .selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)")
       .writeStream
       .format("kafka")
-      .option("kafka.bootstrap.server","host1:port1,host2:port2")
+      .option("kafka.bootstrap.server", "host1:port1,host2:port2")
       .option("subscribe", "outPutTopic")
       .trigger(Trigger.Continuous("1 second"))
       .start()

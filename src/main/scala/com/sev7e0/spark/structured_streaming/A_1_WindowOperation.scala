@@ -5,11 +5,12 @@ import java.sql.Timestamp
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.streaming.OutputMode
+
 object A_1_WindowOperation {
 
   def main(args: Array[String]): Unit = {
 
-    if (args.length<3){
+    if (args.length < 3) {
       println(s" Usage: StructuredNetworkWordCountWindowed <hostname> <port>" +
         " <window duration in seconds> [<slide duration in seconds>]")
       System.exit(1)
@@ -18,8 +19,8 @@ object A_1_WindowOperation {
     val host = args(0)
     val port = args(1).toInt
     val windowSize = args(2).toInt
-    val slideSize = if (args.length ==3 ) windowSize else args(3).toInt
-    if (slideSize > windowSize){
+    val slideSize = if (args.length == 3) windowSize else args(3).toInt
+    if (slideSize > windowSize) {
       System.err.println("<滑动间隔> 必须要小于或等于 <窗口间隔>")
     }
 

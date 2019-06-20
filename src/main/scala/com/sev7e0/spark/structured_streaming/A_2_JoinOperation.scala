@@ -21,7 +21,7 @@ object A_2_JoinOperation {
       .option("", "")
       .load()
 
-    frame.join(jsonDF,"type")
+    frame.join(jsonDF, "type")
   }
 
 }

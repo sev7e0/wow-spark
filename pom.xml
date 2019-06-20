@@ -5,7 +5,7 @@
   <version>1.0-SNAPSHOT</version>
   <properties>
     <scala.version>2.11.6</scala.version>
-    <kafka.version>1.0.0</kafka.version>
+    <kafka.version>2.2.0</kafka.version>
     <spark.version>2.4.0</spark.version>
     <hadoop.version>2.7.5</hadoop.version>
     <hbase.version>1.2.6</hbase.version>
@@ -26,9 +26,22 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <!--Spark Streaming Integration Kafka-->
     <dependency>
       <groupId>org.apache.spark</groupId>
       <artifactId>spark-streaming-kafka-0-10_2.11</artifactId>
+      <version>${spark.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>spark-tags_2.11</artifactId>
+          <groupId>org.apache.spark</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <!--Structured Streaming Integration Kafka-->
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-sql-kafka-0-10_2.11</artifactId>
       <version>${spark.version}</version>
       <exclusions>
         <exclusion>

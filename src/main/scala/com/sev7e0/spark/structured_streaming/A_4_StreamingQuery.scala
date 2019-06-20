@@ -18,11 +18,11 @@ object A_4_StreamingQuery {
     /**
       * query manage
       */
-    query.id  //唯一id,该id在检查点重新启动时仍然存在
+    query.id //唯一id,该id在检查点重新启动时仍然存在
 
     query.runId //运行中的查询唯一运行id,在start和restart时生成
 
-    query.name  //query名字,可以自动生成也可以指定
+    query.name //query名字,可以自动生成也可以指定
 
     query.stop() //停止命令
 
@@ -37,7 +37,7 @@ object A_4_StreamingQuery {
     query.explain() //打印出查询中的具体细节
     /**
       * note:
-      *   你可以通过一个spark session启动多个查询任务,他们将同时运行并共享集群资源,可以使用SparkSession.streams()进行查询任务管理
+      * 你可以通过一个spark session启动多个查询任务,他们将同时运行并共享集群资源,可以使用SparkSession.streams()进行查询任务管理
       */
     session.streams.active
     session.streams.get("id")
@@ -51,7 +51,7 @@ object A_4_StreamingQuery {
     //通过附加StreamingQueryListener来异步监视与SparkSession关联的所有查询
     session.streams.addListener(new StreamingQueryListener {
       override def onQueryStarted(event: StreamingQueryListener.QueryStartedEvent): Unit = {
-        print(event.id,event.name,event.runId)
+        print(event.id, event.name, event.runId)
       }
 
       override def onQueryProgress(event: StreamingQueryListener.QueryProgressEvent): Unit = {
@@ -59,7 +59,7 @@ object A_4_StreamingQuery {
       }
 
       override def onQueryTerminated(event: StreamingQueryListener.QueryTerminatedEvent): Unit = {
-        print(event.exception,event.id,event.runId)
+        print(event.exception, event.id, event.runId)
       }
     })
 
@@ -71,7 +71,7 @@ object A_4_StreamingQuery {
     streamDF.writeStream
       .format("memory")
       .outputMode("complete")
-      .option("checkpointLocation","/dir")
+      .option("checkpointLocation", "/dir")
       .start()
 
     /**

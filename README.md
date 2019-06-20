@@ -18,6 +18,8 @@ spark相关模块实践，以及一点点源码分析，结合了官方文档，
 
 ### :peach: [Structured Streaming][structure]
 
+### :banana: [Spark + Kafka][kafka]
+
 ### :lemon: [Spark Streaming][streaming]
 
 ### :pear: [Delta Lake][delta lake]
@@ -31,6 +33,7 @@ spark相关模块实践，以及一点点源码分析，结合了官方文档，
 [spark]:https://github.com/sev7e0/spark-practice/tree/master/src/main/scala/com/sev7e0/spark/core
 [sql]:https://github.com/sev7e0/spark-practice/tree/master/src/main/scala/com/sev7e0/spark/sql
 [structure]:https://github.com/sev7e0/spark-practice/tree/master/src/main/scala/com/sev7e0/spark/structured_streaming
+[kafka]:https://github.com/sev7e0/spark-practice/tree/master/src/main/scala/com/sev7e0/spark/kafka
 [streaming]:https://github.com/sev7e0/spark-practice/tree/master/src/main/scala/com/sev7e0/spark/spark_streaming
 [source]:https://github.com/sev7e0/spark-practice/tree/master/src/main/resources
 [delta lake]:https://github.com/sev7e0/spark-practice/tree/master/src/main/scala/com/sev7e0/spark/delta

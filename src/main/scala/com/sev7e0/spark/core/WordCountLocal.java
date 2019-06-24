@@ -24,7 +24,6 @@ public class WordCountLocal {
                 .setMaster("local");
         //创建context，作为程序的入口
         //最重要的对象
-        //不同的语言开发，这context对应的不同
         JavaSparkContext context = new JavaSparkContext(conf);
 
         JavaRDD<String> rdd = context.textFile("file:/home/sev7e0/bigdata/spark-2.2.0-bin-hadoop2.7/README.md");

@@ -2,9 +2,16 @@ package com.sev7e0.spark.core.scala
 
 import org.apache.spark.{SparkConf, SparkContext}
 
+
+/**
+  * Spark中相关的转换操作，这些操作都不会被立即执行
+  * 只有在action操作后才会执行
+  */
 object TransformationOperation_Scala {
   def main(args: Array[String]): Unit = {
-    val conf = new SparkConf().setMaster("local").setAppName("TransformationOperation_Scala")
+    val conf = new SparkConf()
+      .setMaster("local")
+      .setAppName(TransformationOperation_Scala.getClass.getName)
     val context = new SparkContext(conf)
     map(context)
   }
@@ -32,7 +39,8 @@ object TransformationOperation_Scala {
       new Tuple2[String, Integer]("class3", 580),
       new Tuple2[String, Integer]("class1", 75))
     context.parallelize(listRdd).groupByKey().foreach(rdd => {
-      println(rdd._1); for (score <- rdd._2) println(score)
+      println(rdd._1);
+      for (score <- rdd._2) println(score)
     })
     //        context.parallelize(listRdd)
   }

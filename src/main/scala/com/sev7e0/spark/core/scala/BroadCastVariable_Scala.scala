@@ -3,7 +3,7 @@ package com.sev7e0.spark.core.scala
 import org.apache.spark._
 
 //BroadCast Scala版本
-class BroadCastVariable_Scala {
+object BroadCastVariable_Scala {
 
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()

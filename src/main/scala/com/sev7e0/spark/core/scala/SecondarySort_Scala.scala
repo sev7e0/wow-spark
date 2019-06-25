@@ -5,7 +5,9 @@ import org.apache.spark.{SparkConf, SparkContext}
 class SecondarySort_Scala {
 
   def main(args: Array[String]): Unit = {
-    val conf = new SparkConf().setMaster("local").setAppName("SecondarySort_Scala")
+    val conf = new SparkConf()
+      .setMaster("local")
+      .setAppName("SecondarySort_Scala")
     val context = new SparkContext(conf)
     val linesRdd = context.textFile("file:///home/sev7e0/DataSets/secondarysort.txt")
 

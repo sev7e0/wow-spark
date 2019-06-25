@@ -7,11 +7,13 @@ object LineCount_Scala {
 
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()
+      .setMaster("local")
       .setAppName("LineCount_Scala")
 
     val context = new SparkContext(conf)
 
-    val lineRdd = context.textFile("file:///home/sev7e0/DataSets/linecount.txt")
+    //注意路径格式
+    val lineRdd = context.textFile("file:///Users/sev7e0/workspace/idea-workspace/sparklearn/src/main/resources/sparkresource/people.txt")
 
     val lineCount = lineRdd.map(line => (line, 1)).reduceByKey(_ + _)
 

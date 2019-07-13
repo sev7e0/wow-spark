@@ -16,7 +16,7 @@ public class LineCount_Java implements AutoCloseable {
     private static JavaSparkContext context = new JavaSparkContextUtil("LineCountLocal", "local").getContext();
 
     public static void main(String[] args) {
-        JavaRDD<String> rdd = context.textFile("file:///home/sev7e0/DataSets/linecount.txt");
+        JavaRDD<String> rdd = context.textFile("src/main/resources/log4j.properties");
         //对每一行产生的rdd执行mapToPair算子,将每一行映射成为(line,1)数据结构,
         //然后才能统计每一行出现的次数
         JavaPairRDD<String, Integer> pairRDD = rdd.mapToPair(s -> new Tuple2<>(s, 1));
@@ -26,7 +26,7 @@ public class LineCount_Java implements AutoCloseable {
         JavaPairRDD<String, Integer> sortRdd = reduceByKey.sortByKey();
         //执行action操作
         sortRdd.foreach(stringIntegerTuple2
-                -> log.info(stringIntegerTuple2._1 + ":" + stringIntegerTuple2._2 + "times"));
+                -> System.out.println(stringIntegerTuple2._1 + ":" + stringIntegerTuple2._2 + "times"));
     }
 
     @Override

@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * ActionOperation相关方法
+ * ActionOperation相关方法,Action 会触发 job 的执行
  */
 public class ActionOperation_Java {
     public static void main(String[] args) {

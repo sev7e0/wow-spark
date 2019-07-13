@@ -19,8 +19,10 @@ public class AccumulatorVariable_Java {
                 .setMaster("local")
                 .setAppName(AccumulatorVariable_Java.class.getName());
 
+        //获取 SparkContext
         final JavaSparkContext jsc = new JavaSparkContext(sparkConf);
 
+        //获取累加器
         final LongAccumulator accumulator = jsc.sc().longAccumulator();
 
         accumulator.setValue(0);
@@ -29,6 +31,7 @@ public class AccumulatorVariable_Java {
 
         List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
+        //分发本地scala集合以形成RDD,将 list 转换成为 rdd
         JavaRDD<Integer> rdd = jsc.parallelize(list);
 
         rdd.foreach(integer -> accumulator.add(Long.valueOf(integer)));

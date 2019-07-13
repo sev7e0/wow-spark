@@ -31,7 +31,7 @@ public class BroadCastVariable_Java {
             return integer * broadcast.value();
         });
         //遍历输出
-        numRdd.foreach(integer -> log.info("计算后的值为 {}",integer.toString()));
+        numRdd.foreach(integer -> log.info("计算后的值为 {}", integer.toString()));
 
     }
 }

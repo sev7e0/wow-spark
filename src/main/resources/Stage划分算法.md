@@ -2,6 +2,7 @@
 1. 首先通过getOrCreateShuffleMapStage创建一个FinalStage
 
 ```scala
+import org.apache.spark.ShuffleDependency
 private def getOrCreateShuffleMapStage(
       shuffleDep: ShuffleDependency[_, _, _],
       firstJobId: Int): ShuffleMapStage = {

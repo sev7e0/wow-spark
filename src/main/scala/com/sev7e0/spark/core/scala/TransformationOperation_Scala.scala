@@ -13,15 +13,23 @@ object TransformationOperation_Scala {
       .setMaster("local")
       .setAppName(TransformationOperation_Scala.getClass.getName)
     val context = new SparkContext(conf)
+    flatMap(context)
     map(context)
   }
 
+  /**
+    * 通过向这个RDD的所有元素应用一个函数来返回一个新的RDD。
+    * @param context
+    */
   def map(context: SparkContext): Unit = {
     val listRdd = Array(1, 2, 3, 5, 8, 6)
     context.parallelize(listRdd).map(_ * 2).foreach(println(_))
   }
 
-
+  /**
+    * 过滤掉不符合要求的元素，返回一个新的 rdd
+    * @param context
+    */
   def filter(context: SparkContext): Unit = {
     val listRdd = Array(1, 2, 3, 5, 8, 6, 7, 8, 9, 10)
     context.parallelize(listRdd).filter(_ % 2 != 0).foreach(println(_))
@@ -42,10 +50,9 @@ object TransformationOperation_Scala {
       println(rdd._1);
       for (score <- rdd._2) println(score)
     })
-    //        context.parallelize(listRdd)
   }
 
-  def cogroup(context: SparkContext): Unit = {
+  def join(context: SparkContext): Unit = {
     val scoreList = Array(new Tuple2[Integer, Integer](1, 25),
       new Tuple2[Integer, Integer](2, 89),
       new Tuple2[Integer, Integer](3, 100),

@@ -21,7 +21,10 @@ public class ActionOperation_Java {
         count(context);
     }
 
-    //reduce操作
+    /**
+     * 使用指定的二元运算符减少rdd 元素
+     * @param context
+     */
     private static void reduce(JavaSparkContext context) {
         List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
         Integer reduce = context.parallelize(integerList)
@@ -29,8 +32,14 @@ public class ActionOperation_Java {
         System.out.println(reduce);
     }
 
-    //从远程获取到rdd，拉去到本地
-    //不推荐使用，因为可能会造成大量的网络io
+    /**
+     * 返回一个包含了所有 rdd 元素的数组。
+     *
+     * 不推荐使用，因为可能会造成大量的网络io
+     * 只有当结果数组很小时才应该使用此方法，因为所有数据都加载到驱动程序的内存中。
+     *
+     * @param context
+     */
     private static void collect(JavaSparkContext context) {
         List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
@@ -43,7 +52,12 @@ public class ActionOperation_Java {
         }
     }
 
-    //统计rdd中含有多少个元素
+    /**
+     * 使用getIteratorSize，对当前0 to 所有的 rdd 进行长度统计，返回一个 ArrayList
+     * 对 list 使用 sum 求出所有数量。
+     *
+     * @param context
+     */
     private static void count(JavaSparkContext context) {
         List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
         long count = context.parallelize(integerList)
@@ -51,7 +65,12 @@ public class ActionOperation_Java {
         System.out.println(count);
     }
 
-    //与collect相似，只不过是从远程拿取rdd中的前n个元素
+    /**
+     * 与collect相似，只不过是从远程拿取rdd中的前n个元素
+     *
+     * 只有当结果数组很小时才应该使用此方法，因为所有数据都加载到驱动程序的内存中。
+     * @param context
+     */
     private static void take(JavaSparkContext context) {
         List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
         List<Integer> take = context.parallelize(integerList)

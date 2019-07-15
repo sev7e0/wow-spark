@@ -10,7 +10,7 @@ public class Persist {
     public static void main(String[] args) {
         JavaSparkContext context = new JavaSparkContextUtil("Persist", "local").getContext();
         //使用rdd持久化，必须在transformation或者textFile加载完成后创建完rdd。直接调用，否则持久化操作不会生效
-        JavaRDD<String> stringJavaRDD = context.textFile("file:///home/sev7e0/DataSets/derby.log")
+        JavaRDD<String> stringJavaRDD = context.textFile("src/main/resources/sparkresource/people.txt")
                 .persist(StorageLevel.MEMORY_ONLY());
 
         long currentTimeMillis = System.currentTimeMillis();

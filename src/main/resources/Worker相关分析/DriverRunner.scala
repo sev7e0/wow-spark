@@ -213,9 +213,9 @@ private[deploy] class DriverRunner(
   private[worker] def runCommandWithRetry(
       command: ProcessBuilderLike, initialize: Process => Unit, supervise: Boolean): Int = {
     var exitCode = -1
-    // Time to wait between submission retries.
+    // 在提交重试之间等待的时间。
     var waitSeconds = 1
-    // A run of this many seconds resets the exponential back-off.
+    // 运行多少秒会重置指数后退。
     val successfulRunDuration = 5
     var keepTrying = !killed
 

@@ -91,11 +91,11 @@ object A_7_WriteStream {
       *
       * ForeachBatch 允许指定在流查询的每个微批处理的输出数据上执行的函数。
       */
-    streamDF.writeStream.foreachBatch((a, b) => {
-      // 打印出每个微批
-      a.show()
-      print(b)
-    })
+//    streamDF.writeStream.foreachBatch((a, b) => {
+//      // 打印出每个微批
+//      a.show()
+//      print(b)
+//    })
 
     /**
       * 当foreachBatch不能满足时(不存在对应的批处理data writer,或者连续处理模式),就可以将处理逻辑使用foreach代替

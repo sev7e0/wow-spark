@@ -21,7 +21,7 @@ object ActionOperation_Scala {
     */
   def reduce(context: SparkContext): Unit = {
     val ints = Array(1, 2, 3, 4, 5, 6, 7, 8, 9)
-    val num = context.parallelize(ints).reduce(_ + _)
+    val num = context.parallelize(ints).persist().reduce(_ + _)
     println(num)
   }
 

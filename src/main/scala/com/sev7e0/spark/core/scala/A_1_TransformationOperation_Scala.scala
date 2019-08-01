@@ -4,40 +4,51 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 
 /**
-  * Spark中相关的转换操作，这些操作都不会被立即执行
-  * 只有在action操作后才会执行
-  */
-object TransformationOperation_Scala {
+ * Spark中相关的转换操作,delay operation,只有在Action(参看A_2_ActionOperation_Scala)
+ * 操作之后才会真实的执行.
+ *
+ * Spark 根据操作属性分别 RDD 之间的依赖属性,再根据依赖属性进行 stage 的划分,最终将 stage
+ * 封装成 job 进行任务的提交.
+ *
+ * 依赖属性:
+ *    宽依赖(ShuffleDependency): 是指当前 rdd 的父RDD 被多个 RDD 引用
+ *    窄依赖(NarrowDependency): 是指当前 rdd 的父RDD 只被一个 RDD 所引用
+ *
+ * 详细参看我的博客:
+ */
+object A_1_TransformationOperation_Scala {
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()
       .setMaster("local")
-      .setAppName(TransformationOperation_Scala.getClass.getName)
+      .setAppName(A_1_TransformationOperation_Scala.getClass.getName)
     val context = new SparkContext(conf)
     flatMap(context)
     map(context)
   }
 
   /**
-    * 通过向这个RDD的所有元素应用一个函数来返回一个新的RDD。
-    * @param context
-    */
+   * 通过向这个RDD的所有元素应用一个函数来返回一个新的RDD。
+   *
+   * @param context
+   */
   def map(context: SparkContext): Unit = {
     val listRdd = Array(1, 2, 3, 5, 8, 6)
     context.parallelize(listRdd).map(_ * 2).foreach(println(_))
   }
 
-  /**
-    * 过滤掉不符合要求的元素，返回一个新的 rdd
-    * @param context
-    */
-  def filter(context: SparkContext): Unit = {
-    val listRdd = Array(1, 2, 3, 5, 8, 6, 7, 8, 9, 10)
-    context.parallelize(listRdd).filter(_ % 2 != 0).foreach(println(_))
-  }
-
   def flatMap(context: SparkContext): Unit = {
     val listRdd = Array("hello you ", "hello java", "hello leo")
     context.parallelize(listRdd).flatMap(_.split(" ")).foreach(println(_))
+  }
+
+  /**
+   * 过滤掉不符合要求的元素，返回一个新的 rdd
+   *
+   * @param context
+   */
+  def filter(context: SparkContext): Unit = {
+    val listRdd = Array(1, 2, 3, 5, 8, 6, 7, 8, 9, 10)
+    context.parallelize(listRdd).filter(_ % 2 != 0).foreach(println(_))
   }
 
   def gropByKey(context: SparkContext): Unit = {
@@ -88,11 +99,11 @@ object TransformationOperation_Scala {
       .cogroup(context.parallelize(scoreList))
       //scala中输入多行需要使用 { } 进行包裹，否则只能使用一行处理
       .foreach(score => {
-      println(score._1);
-      println(score._2._1);
-      println(score._2._2);
-      println("----------")
-    })
+        println(score._1);
+        println(score._2._1);
+        println(score._2._2);
+        println("----------")
+      })
 
   }
 }

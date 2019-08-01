@@ -1,32 +1,46 @@
 ## spark-practice
 
-spark相关模块实践，以及一点点源码分析，结合了官方文档，以及一些博客教程。还有scala基础练习，
-欢迎志同道合的朋友一起交流。
+Spark modules and Scala practice, At the same time, have some source
+code analysis.
 
-小弟博客-[大数据施工现场](http://blog.sev7e0.site/) 
+## Environment
 
-:yellow_heart:欢迎留言！
+|   | tool  |version |
+|:--|:------|:-------|
+| 1 | Java  | 8      |
+| 2 | Scala | 2.12.8 |
+| 3 | Maven | 3.5.4  |
+| 4 | Spark | 2.4.0  |
+| 5 | Kafka | 2.2.0  |
 
-:yellow_heart:欢迎留言！
 
-:yellow_heart:欢迎留言！
+## List
 
+####  [Spark Core][spark]
 
-### :apple: [Spark][spark]
+####  [Spark SQL][sql]
 
-### :grapes: [Spark SQL][sql]
+####  [Structured Streaming][structure]
 
-### :peach: [Structured Streaming][structure]
+####  [Spark + Kafka][kafka]
 
-### :banana: [Spark + Kafka][kafka]
+####  [Spark Streaming][streaming]
 
-### :lemon: [Spark Streaming][streaming]
+####  [Delta Lake][delta lake]
 
-### :pear: [Delta Lake][delta lake]
+####  [Spark Source Code Analysis][source]
 
-### :watermelon: [Spark Source Code Analysis][source]
+####  [Scala][scala]
 
-### :tangerine: [Scala][scala]
+## MyBlog
+
+[大数据施工现场](http://blog.sev7e0.site/) 
+
+:yellow_heart:Welcome to visit！
+
+:yellow_heart:Welcome to visit！
+
+:yellow_heart:Welcome to visit！
 
 
 

@@ -4,7 +4,7 @@
   <artifactId>spark-learn</artifactId>
   <version>1.0-SNAPSHOT</version>
   <properties>
-    <scala.version>2.11.6</scala.version>
+    <scala.version>2.12.8</scala.version>
     <kafka.version>2.2.0</kafka.version>
     <spark.version>2.4.0</spark.version>
     <hadoop.version>2.7.5</hadoop.version>
@@ -14,26 +14,14 @@
   </properties>
 
   <dependencies>
-    <!--kafka依赖-->
-    <dependency>
-      <groupId>org.apache.kafka</groupId>
-      <artifactId>kafka_2.11</artifactId>
-      <version>${kafka.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>com.fasterxml.jackson.core</groupId>
-          <artifactId>*</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
     <!--Spark Streaming Integration Kafka-->
     <dependency>
       <groupId>org.apache.spark</groupId>
-      <artifactId>spark-streaming-kafka-0-10_2.11</artifactId>
+      <artifactId>spark-streaming-kafka-0-10_2.12</artifactId>
       <version>${spark.version}</version>
       <exclusions>
         <exclusion>
-          <artifactId>spark-tags_2.11</artifactId>
+          <artifactId>spark-tags_2.12</artifactId>
           <groupId>org.apache.spark</groupId>
         </exclusion>
       </exclusions>
@@ -41,11 +29,11 @@
     <!--Structured Streaming Integration Kafka-->
     <dependency>
       <groupId>org.apache.spark</groupId>
-      <artifactId>spark-sql-kafka-0-10_2.11</artifactId>
+      <artifactId>spark-sql-kafka-0-10_2.12</artifactId>
       <version>${spark.version}</version>
       <exclusions>
         <exclusion>
-          <artifactId>spark-tags_2.11</artifactId>
+          <artifactId>spark-tags_2.12</artifactId>
           <groupId>org.apache.spark</groupId>
         </exclusion>
       </exclusions>
@@ -57,51 +45,62 @@
       <version>${hadoop.version}</version>
     </dependency>
     <!--habase依赖-->
-    <dependency>
-      <groupId>org.apache.hbase</groupId>
-      <artifactId>hbase-server</artifactId>
-      <version>${hbase.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.hbase</groupId>
-      <artifactId>hbase-client</artifactId>
-      <version>${hbase.version}</version>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.apache.hbase</groupId>-->
+<!--      <artifactId>hbase-server</artifactId>-->
+<!--      <version>${hbase.version}</version>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>org.apache.hbase</groupId>-->
+<!--      <artifactId>hbase-client</artifactId>-->
+<!--      <version>${hbase.version}</version>-->
+<!--    </dependency>-->
     <!--spark依赖-->
-    <dependency>
-      <groupId>org.apache.spark</groupId>
-      <artifactId>spark-core_2.11</artifactId>
-      <version>${spark.version}</version>
-    </dependency>
 
+    <!--This is because JDK8 is compatible with paranamer version
+    2.8 or above and spark 2.4.0 uses paranamer version 2.7. -->
     <dependency>
-      <groupId>org.apache.spark</groupId>
-      <artifactId>spark-streaming_2.11</artifactId>
-      <version>${spark.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.spark</groupId>
-      <artifactId>spark-sql_2.11</artifactId>
-      <version>${spark.version}</version>
+      <groupId>com.thoughtworks.paranamer</groupId>
+      <artifactId>paranamer</artifactId>
+      <version>2.8</version>
     </dependency>
     <dependency>
       <groupId>org.apache.spark</groupId>
-      <artifactId>spark-hive_2.11</artifactId>
+      <artifactId>spark-core_2.12</artifactId>
       <version>${spark.version}</version>
     </dependency>
-      <!-- https://mvnrepository.com/artifact/com.databricks/spark-avro -->
-      <dependency>
-          <groupId>com.databricks</groupId>
-          <artifactId>spark-avro_2.11</artifactId>
-          <version>4.0.0</version>
-      </dependency>
 
-
-
-      <dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-streaming -->
+    <dependency>
       <groupId>org.apache.spark</groupId>
-      <artifactId>spark-mllib_2.11</artifactId>
+      <artifactId>spark-streaming_2.12</artifactId>
+      <version>2.4.1</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-sql_2.12</artifactId>
+      <version>${spark.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-hive_2.12</artifactId>
+      <version>${spark.version}</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-avro -->
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-avro_2.12</artifactId>
+      <version>${spark.version}</version>
+    </dependency>
+
+
+
+
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-mllib_2.12</artifactId>
       <version>${spark.version}</version>
     </dependency>
     <dependency>
@@ -112,7 +111,7 @@
     <!-- https://mvnrepository.com/artifact/org.scala-lang.modules/scala-xml -->
     <dependency>
       <groupId>org.scala-lang.modules</groupId>
-      <artifactId>scala-xml_2.11</artifactId>
+      <artifactId>scala-xml_2.12</artifactId>
       <version>1.0.6</version>
     </dependency>
 
@@ -123,13 +122,6 @@
     </dependency>
 
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.4</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
       <version>2.6.6</version>
@@ -137,7 +129,7 @@
 
     <dependency>
       <groupId>io.delta</groupId>
-      <artifactId>delta-core_2.11</artifactId>
+      <artifactId>delta-core_2.12</artifactId>
       <version>${delta.version}</version>
     </dependency>
     <dependency>
@@ -162,24 +154,6 @@
     <sourceDirectory>src/main/scala</sourceDirectory>
     <testSourceDirectory>src/test/scala</testSourceDirectory>
     <plugins>
-      <plugin>
-        <groupId>org.scala-tools</groupId>
-        <artifactId>maven-scala-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>compile</goal>
-              <goal>testCompile</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <scalaVersion>2.14.1</scalaVersion>
-          <args>
-            <arg>-target:jvm-1.8</arg>
-          </args>
-        </configuration>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>

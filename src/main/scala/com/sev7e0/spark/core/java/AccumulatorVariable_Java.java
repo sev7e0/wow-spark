@@ -1,9 +1,8 @@
-package com.sev7e0.spark.core;
+package com.sev7e0.spark.core.java;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.api.java.function.VoidFunction;
 import org.apache.spark.util.LongAccumulator;
 
 import java.util.Arrays;

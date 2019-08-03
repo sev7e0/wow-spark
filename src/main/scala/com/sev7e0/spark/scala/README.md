@@ -15,5 +15,7 @@
 |类型依赖|9-DependencyClass.scala|
 |类型类|TypeClass.scala|
 |类型类|TypeClass2.scala|
+|内部方法|A_9_InnerMethod.scala|
+|构造器 and 辅助构造器|A_10_ClassConstructor.scala|
 
 

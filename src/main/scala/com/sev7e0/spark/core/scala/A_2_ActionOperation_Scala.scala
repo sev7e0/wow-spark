@@ -4,7 +4,8 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 
 /**
- *
+ * Action 操作也是Spark 任务真正执行的操作
+ * 在 Action 方法内部调用了 SparkContext 的 runJob方法,进行 job 的提交
  *
  */
 object A_2_ActionOperation_Scala {

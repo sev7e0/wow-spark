@@ -2,7 +2,7 @@ package com.sev7e0.spark.core.scala
 
 import org.apache.spark.{SparkConf, SparkContext}
 
-class SecondarySort_Scala {
+class SecondarySort {
 
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()
@@ -17,7 +17,7 @@ class SecondarySort_Scala {
         line)
     }
     mapRdd.sortByKey().map(rdd => rdd._2).foreach(rdd => {
-      println(s"rdd = ${rdd}")
+      println(s"rdd = $rdd")
     })
 
   }

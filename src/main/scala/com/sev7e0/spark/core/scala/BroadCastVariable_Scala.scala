@@ -14,6 +14,7 @@ object BroadCastVariable_Scala {
     val factor = 5
     //设置共享变量
     val broadcast = context.broadcast(factor)
+
     context.parallelize(array).map(arr => arr * broadcast.value).foreach(args => println(args))
   }
 

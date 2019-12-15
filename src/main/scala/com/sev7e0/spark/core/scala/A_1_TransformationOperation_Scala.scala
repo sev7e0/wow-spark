@@ -1,5 +1,6 @@
 package com.sev7e0.spark.core.scala
 
+import org.apache.log4j.Logger
 import org.apache.spark.{SparkConf, SparkContext}
 
 
@@ -17,11 +18,14 @@ import org.apache.spark.{SparkConf, SparkContext}
  * 详细参看我的博客:
  */
 object A_1_TransformationOperation_Scala {
+  private val log = Logger.getLogger(A_1_TransformationOperation_Scala.getClass)
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()
       .setMaster("local")
       .setAppName(A_1_TransformationOperation_Scala.getClass.getName)
+    log.info("")
     val context = new SparkContext(conf)
+
     flatMap(context)
     map(context)
   }
@@ -58,6 +62,7 @@ object A_1_TransformationOperation_Scala {
       new Tuple2[String, Integer]("class3", 580),
       new Tuple2[String, Integer]("class1", 75))
     context.parallelize(listRdd).groupByKey().foreach(rdd => {
+
       println(rdd._1);
       for (score <- rdd._2) println(score)
     })

@@ -10,16 +10,25 @@ import org.apache.spark.{SparkConf, SparkContext}
   **/
 object TopN_Scala {
   def main(args: Array[String]): Unit = {
-    val conf = new SparkConf().setAppName("topnScala").setMaster("local")
+    val conf = new SparkConf().setAppName("topnScala").setMaster("spark://spark01:7077")
+    conf.set("spark.jars", "target/spark-learn-1.0-SNAPSHOT.jar")
     val context = new SparkContext(conf)
 
-    val pairRdd = context.textFile("/Users/sev7e0/dataset/topn.txt").map(line => Tuple2(Integer.valueOf(line), line))
+    val textRDD = context.textFile("hdfs://spark01:9000/spark/access.log")
 
-    val integer = pairRdd.sortByKey(false).map(rdd => rdd._1).take(3)
+    val filterRdd = textRDD.filter(line => line.split(" ").length > 10)
+//    filterRdd.take(300).foreach(println)
+    val mapRDD = filterRdd.flatMap(_.split(" ")(0)).map((_,1))
 
-    integer.foreach(integer => println(s"integer = $integer"))
+    val reduceRDD = mapRDD.reduceByKey(_+_)
 
+    val sortRDD = reduceRDD.sortBy(_._2)
 
+    sortRDD.take(5).foreach(println)
+
+    sortRDD.saveAsTextFile("hdfs://spark01:9000/spark/topn-e")
+
+    context.stop()
   }
 
 }

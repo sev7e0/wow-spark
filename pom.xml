@@ -4,9 +4,9 @@
   <artifactId>spark-learn</artifactId>
   <version>1.0-SNAPSHOT</version>
   <properties>
-    <scala.version>2.12.8</scala.version>
+    <scala.version>2.11.12</scala.version>
     <kafka.version>2.2.0</kafka.version>
-    <spark.version>2.4.0</spark.version>
+    <spark.version>2.3.3</spark.version>
     <hadoop.version>2.7.5</hadoop.version>
     <hbase.version>1.2.6</hbase.version>
     <slf4j.version>1.7.20</slf4j.version>
@@ -17,11 +17,11 @@
     <!--Spark Streaming Integration Kafka-->
     <dependency>
       <groupId>org.apache.spark</groupId>
-      <artifactId>spark-streaming-kafka-0-10_2.12</artifactId>
+      <artifactId>spark-streaming-kafka-0-10_2.11</artifactId>
       <version>${spark.version}</version>
       <exclusions>
         <exclusion>
-          <artifactId>spark-tags_2.12</artifactId>
+          <artifactId>spark-tags_2.11</artifactId>
           <groupId>org.apache.spark</groupId>
         </exclusion>
       </exclusions>
@@ -29,11 +29,11 @@
     <!--Structured Streaming Integration Kafka-->
     <dependency>
       <groupId>org.apache.spark</groupId>
-      <artifactId>spark-sql-kafka-0-10_2.12</artifactId>
+      <artifactId>spark-sql-kafka-0-10_2.11</artifactId>
       <version>${spark.version}</version>
       <exclusions>
         <exclusion>
-          <artifactId>spark-tags_2.12</artifactId>
+          <artifactId>spark-tags_2.11</artifactId>
           <groupId>org.apache.spark</groupId>
         </exclusion>
       </exclusions>
@@ -66,41 +66,41 @@
     </dependency>
     <dependency>
       <groupId>org.apache.spark</groupId>
-      <artifactId>spark-core_2.12</artifactId>
+      <artifactId>spark-core_2.11</artifactId>
       <version>${spark.version}</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-streaming -->
     <dependency>
       <groupId>org.apache.spark</groupId>
-      <artifactId>spark-streaming_2.12</artifactId>
-      <version>2.4.1</version>
-    </dependency>
-
-
-    <dependency>
-      <groupId>org.apache.spark</groupId>
-      <artifactId>spark-sql_2.12</artifactId>
-      <version>${spark.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.spark</groupId>
-      <artifactId>spark-hive_2.12</artifactId>
-      <version>${spark.version}</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-avro -->
-    <dependency>
-      <groupId>org.apache.spark</groupId>
-      <artifactId>spark-avro_2.12</artifactId>
+      <artifactId>spark-streaming_2.11</artifactId>
       <version>${spark.version}</version>
     </dependency>
 
 
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-sql_2.11</artifactId>
+      <version>${spark.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-hive_2.11</artifactId>
+      <version>${spark.version}</version>
+    </dependency>
+<!--    &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.spark/spark-avro &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>org.apache.spark</groupId>-->
+<!--      <artifactId>spark-avro_2.11</artifactId>-->
+<!--      <version>${spark.version}</version>-->
+<!--    </dependency>-->
+
+
 
 
     <dependency>
       <groupId>org.apache.spark</groupId>
-      <artifactId>spark-mllib_2.12</artifactId>
+      <artifactId>spark-mllib_2.11</artifactId>
       <version>${spark.version}</version>
     </dependency>
     <dependency>
@@ -111,7 +111,7 @@
     <!-- https://mvnrepository.com/artifact/org.scala-lang.modules/scala-xml -->
     <dependency>
       <groupId>org.scala-lang.modules</groupId>
-      <artifactId>scala-xml_2.12</artifactId>
+      <artifactId>scala-xml_2.11</artifactId>
       <version>1.0.6</version>
     </dependency>
 
@@ -129,7 +129,7 @@
 
     <dependency>
       <groupId>io.delta</groupId>
-      <artifactId>delta-core_2.12</artifactId>
+      <artifactId>delta-core_2.11</artifactId>
       <version>${delta.version}</version>
     </dependency>
     <dependency>
@@ -161,6 +161,28 @@
           <source>8</source>
           <target>8</target>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>scala-maven-plugin</artifactId>
+        <version>3.2.2</version>
+        <executions>
+          <execution>
+            <id>scala-compile-first</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>add-source</goal>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>scala-test-compile</id>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

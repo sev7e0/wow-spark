@@ -16,14 +16,16 @@ object Extractor {
     val java = new CommonUsers("java",70, 0)
     java match {
       case CommonUsers(name, _, sex) =>
-        if (sex == 0){
+        if (sex==0){
           println(java.name+" is a man")
         }else{
           println(java.name+" is a woman ")
         }
       case VIPUsers(arg) => println("cant identify")
     }
+    for (i<-1   to   10){
 
+    }
     /**
       * 布尔提取器
       */

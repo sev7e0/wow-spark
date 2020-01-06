@@ -12,12 +12,15 @@ object NetworkWordCount {
       System.exit(1)
     }
 
+    /**
+     * nc -l -p 9999
+     */
     // 设置Streaming的名字,以及配置两个本地的执行线程, 创建一个StreamingContext需要的SparkConf对象
     val conf = new SparkConf().setAppName("NetworkWordCount").setMaster("local[2]")
     // 创建context并设置interval时间间隔为1秒
     val context = new StreamingContext(conf, Seconds(1))
     // 使用context可以穿件一个代表来自socket的DStream,这里需要指定hostname,port
-    val lines = context.socketTextStream(args(0), args(1).toInt)
+    val lines = context.socketTextStream("127.0.0.1", 9999)
     // 名字为lines的DStream代表收到发送进来的数据,每个DStream为一行文本,我们将改行文本按照" "(空格)进行分割成单词
     val words = lines.flatMap(_.split(" "))
     // 将产生的新的DStream->words中的每个单词map成(word, 1)格式的DStream

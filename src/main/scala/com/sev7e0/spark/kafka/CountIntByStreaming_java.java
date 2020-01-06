@@ -13,12 +13,13 @@ import org.apache.spark.streaming.kafka010.LocationStrategies;
 import scala.Tuple2;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CountIntByStreaming_java {
 
-    public static final String brokerList = "localhost:9092";
+    public static final String brokerList = "spark01:9092";
     public static final String topic = "randomCount";
     //新的group，相较于ConsumerQuickStart group-1分组，现在kafka是发布订阅模型
     public static final String groupId = "group";
@@ -37,7 +38,7 @@ public class CountIntByStreaming_java {
         Map<String, Object> kafkaParams = initProperties();
         JavaInputDStream<ConsumerRecord<String, String>> dStream = KafkaUtils.createDirectStream(context,
                 LocationStrategies.PreferConsistent(),
-                ConsumerStrategies.Subscribe(Arrays.asList(topic), kafkaParams));
+                ConsumerStrategies.Subscribe(Collections.singletonList(topic), kafkaParams));
 
         dStream.mapToPair(record -> new Tuple2<>(record.key(), Integer.valueOf(record.value())))
                 .reduce(CountIntByStreaming_java::call)

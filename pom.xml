@@ -5,7 +5,6 @@
   <version>1.0-SNAPSHOT</version>
   <properties>
     <scala.version>2.11.12</scala.version>
-    <kafka.version>2.2.0</kafka.version>
     <spark.version>2.3.3</spark.version>
     <hadoop.version>2.7.5</hadoop.version>
     <slf4j.version>1.7.20</slf4j.version>
@@ -23,6 +22,10 @@
           <artifactId>spark-tags_2.11</artifactId>
           <groupId>org.apache.spark</groupId>
         </exclusion>
+        <exclusion>
+          <groupId>net.jpountz.lz4</groupId>
+          <artifactId>lz4</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <!--Structured Streaming Integration Kafka-->
@@ -34,6 +37,10 @@
         <exclusion>
           <artifactId>spark-tags_2.11</artifactId>
           <groupId>org.apache.spark</groupId>
+        </exclusion>
+        <exclusion>
+          <groupId>net.jpountz.lz4</groupId>
+          <artifactId>lz4</artifactId>
         </exclusion>
       </exclusions>
     </dependency>

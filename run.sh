@@ -1,6 +1,6 @@
 #!/bin/bash
 #任务提交脚本,第一个参数传递入口类路径,第二个参数传递jar文件名
-#例如:./run.sh com.lijiaqi.spark.core.LineCount_Scala spark-learn-1.0-SNAPSHOT.jar
+#例如:./run.sh com.lijiaqi.spark.core.LineCount_Scala wow-spark-1.0-SNAPSHOT.jar
 
 spark-submit \
 --class $1 \

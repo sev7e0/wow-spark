@@ -2,6 +2,7 @@ package com.sev7e0.wow.core.scala
 
 import org.apache.log4j.Logger
 import org.apache.spark.{SparkConf, SparkContext}
+import org.junit.Test
 
 
 /**
@@ -26,8 +27,7 @@ object A_1_TransformationOperation_Scala {
     log.info("")
     val context = new SparkContext(conf)
 
-    flatMap(context)
-    map(context)
+    mapPartitions(context)
   }
 
   /**
@@ -40,6 +40,28 @@ object A_1_TransformationOperation_Scala {
     context.parallelize(listRdd).map(_ * 2).foreach(println(_))
   }
 
+  /**
+   * 类似于map，但是是在每一个partition上运行.
+   * 假设有N个元素，有M个分区，那么map的函数的将被调用N次,
+   * 而mapPartitions被调用M次,一个函数一次处理所有分区。
+   * @param context
+   */
+  def mapPartitions(context: SparkContext): Unit = {
+    val value = context.parallelize(1 to 20, 3)
+    val size = value.partitions.size
+    println(size)
+    println(value.mapPartitions(v => Array(v).iterator).count())
+  }
+
+  def reduceByKey(context: SparkContext): Unit={
+    val value = context.parallelize(1 to 20)
+//    value.map(_ => (_,1)).reduceByKey(_ + _)
+  }
+
+  /**
+   *
+   * @param context
+   */
   def flatMap(context: SparkContext): Unit = {
     val listRdd = Array("hello you ", "hello java", "hello leo")
     context.parallelize(listRdd).flatMap(_.split(" ")).foreach(println(_))
@@ -50,12 +72,13 @@ object A_1_TransformationOperation_Scala {
    *
    * @param context
    */
+
   def filter(context: SparkContext): Unit = {
     val listRdd = Array(1, 2, 3, 5, 8, 6, 7, 8, 9, 10)
     context.parallelize(listRdd).filter(_ % 2 != 0).foreach(println(_))
   }
 
-  def gropByKey(context: SparkContext): Unit = {
+  def groupByKey(context: SparkContext): Unit = {
     val listRdd = Array(new Tuple2[String, Integer]("class1", 50),
       new Tuple2[String, Integer]("class1", 80),
       new Tuple2[String, Integer]("class2", 65),

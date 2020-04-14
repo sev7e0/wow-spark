@@ -1,7 +1,9 @@
-## spark-practice
+## wow-spark
 
 Spark modules and Scala practice, At the same time, have some source
 code analysis.
+
+Spark自学记录手册
 
 ## Environment
 
@@ -34,7 +36,7 @@ code analysis.
 
 ## MyBlog
 
-[大数据施工现场](http://blog.sev7e0.site/) 
+[个人博客](http://www.sev7e0.site/)
 
 :yellow_heart:Welcome to visit！
 

@@ -44,13 +44,57 @@ object A_1_TransformationOperation_Scala {
    * 类似于map，但是是在每一个partition上运行.
    * 假设有N个元素，有M个分区，那么map的函数的将被调用N次,
    * 而mapPartitions被调用M次,一个函数一次处理所有分区。
+   *
+   * 返回一个MapPartitionRDD
+   *
    * @param context
    */
   def mapPartitions(context: SparkContext): Unit = {
-    val value = context.parallelize(1 to 20, 3)
-    val size = value.partitions.size
-    println(size)
-    println(value.mapPartitions(v => Array(v).iterator).count())
+    val value = context.parallelize(1 to 10, 3)
+    //构造function，参数和返回值只能是Iterator类型
+    def mapPartitionsFunction(iterator: Iterator[Int]): Iterator[(Int,Int)]={
+      var result = List[(Int,Int)]()
+      while (iterator.hasNext){
+        val i = iterator.next()
+          //在list开头插入新的tuple，由于是不可变得，所以生成了一个新的list
+          result = result.::(i, i*i)
+      }
+      result.iterator
+    }
+    val listValue = context.parallelize(List((1,1), (1,2), (1,3), (2,1), (2,2), (2,3)))
+    //向mapPartitions传递function
+    val partitionRDD = value.mapPartitions(mapPartitionsFunction)
+    partitionRDD.foreach(out=>println(out))
+    //(3,9)
+    //(2,4)
+    //(1,1)
+    //(6,36)
+    //(5,25)
+    //(4,16)
+    //(10,100)
+    //(9,81)
+    //(8,64)
+    //(7,49)
+
+    //函数式写法 生成新的(a , b*b)
+    val tupleRDD = listValue.mapPartitions(iterator => {
+      var resultTuple = List[(Int, Int)]()
+      while (iterator.hasNext) {
+        val tuple = iterator.next()
+        resultTuple = resultTuple.::(tuple._1, tuple._2 * tuple._2)
+      }
+      resultTuple.iterator
+    })
+    tupleRDD.foreach(println(_))
+    //(9,81)
+    //(8,64)
+    //(7,49)
+    //(2,9)
+    //(2,4)
+    //(2,1)
+    //(1,9)
+    //(1,4)
+    //(1,1)
   }
 
   def reduceByKey(context: SparkContext): Unit={

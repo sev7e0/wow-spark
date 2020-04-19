@@ -46,11 +46,11 @@ Spark自学记录手册
 
 
 
-[spark]:https://github.com/sev7e0/spark-practice/tree/master/src/main/scala/com/sev7e0/spark/core
-[sql]:https://github.com/sev7e0/spark-practice/tree/master/src/main/scala/com/sev7e0/spark/sql
-[structure]:https://github.com/sev7e0/spark-practice/tree/master/src/main/scala/com/sev7e0/spark/structured_streaming
-[kafka]:https://github.com/sev7e0/spark-practice/tree/master/src/main/scala/com/sev7e0/spark/kafka
-[streaming]:https://github.com/sev7e0/spark-practice/tree/master/src/main/scala/com/sev7e0/spark/spark_streaming
-[source]:https://github.com/sev7e0/spark-practice/tree/master/src/main/resources
-[delta lake]:https://github.com/sev7e0/spark-practice/tree/master/src/main/scala/com/sev7e0/spark/delta
-[scala]:https://github.com/sev7e0/spark-practice/tree/master/src/main/scala/com/sev7e0/spark/scala
+[spark]:https://github.com/sev7e0/wow-spark/tree/master/src/main/scala/com/sev7e0/wow/core
+[sql]:https://github.com/sev7e0/wow-spark/tree/master/src/main/scala/com/sev7e0/wow/sql
+[structure]:https://github.com/sev7e0/wow-spark/tree/master/src/main/scala/com/sev7e0/wow/structured_streaming
+[kafka]:https://github.com/sev7e0/wow-spark/tree/master/src/main/scala/com/sev7e0/wow/kafka
+[streaming]:https://github.com/sev7e0/wow-spark/tree/master/src/main/scala/com/sev7e0/wow/spark_streaming
+[source]:https://github.com/sev7e0/wow-spark/tree/master/src/main/resources
+[delta lake]:https://github.com/sev7e0/wow-spark/tree/master/src/main/scala/com/sev7e0/wow/delta
+[scala]:https://github.com/sev7e0/wow-spark/tree/master/src/main/scala/com/sev7e0/wow/scala

@@ -1,7 +1,7 @@
 package com.sev7e0.wow.core.scala
 
 import com.sev7e0.wow.utils.TestUtils
-import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.SparkContext
 
 
 /**

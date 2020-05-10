@@ -31,7 +31,7 @@ object Checkpoint {
 
     /**
       * checkpoint在以下情况下必须使用:
-      * 使用状态转换操作,例如updateStateByKey和reduceByKeyAndWindow，使用时必须同checkpoint文件件
+      * 使用状态转换操作,例如updateStateByKey和reduceByKeyAndWindow，使用时必须同checkpoint文件
       * 从运行应用程序的driver的故障中恢复，使用metadata checkpoint主要是为了查找任务的进度信息
       * 注意：将RDD保存到外部的可靠存储系统时将会增加spark的处理时间，因此在设置checkpoint周期时要谨慎，过短将会降低整个系统的吞吐量
       * 周期过长将会产生长依赖和任务数量的显著增加。对于需要RDD检查点的有状态转换，默认间隔是至少10秒的批处理间隔的倍数。

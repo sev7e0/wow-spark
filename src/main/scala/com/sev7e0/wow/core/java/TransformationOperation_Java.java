@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Transformation算子
  */
-@SuppressWarnings({"unchecked", "unused"})
+@SuppressWarnings({"unused"})
 public class TransformationOperation_Java {
 
     public static void main(String[] args) {
@@ -24,7 +24,7 @@ public class TransformationOperation_Java {
         JavaSparkContext context = new JavaSparkContextUtil("TransformationOperation_Java", "local").getContext();
         coGroup(context);
         join(context);
-        gropByKey(context);
+        groupByKey(context);
         flatMap(context);
         filter(context);
         map(context);
@@ -128,7 +128,7 @@ public class TransformationOperation_Java {
     /**
      * gropByKey算子实例:按照班级对成绩进行分组
      */
-    private static void gropByKey(JavaSparkContext context) {
+    private static void groupByKey(JavaSparkContext context) {
 
         List<Tuple2<String, Integer>> list = Arrays.asList(new Tuple2<>("class1", 50),
                 new Tuple2<>("class1", 80),

@@ -10,6 +10,7 @@
     <hadoop.version>2.7.5</hadoop.version>
     <slf4j.version>1.7.20</slf4j.version>
     <delta.version>0.1.0</delta.version>
+    <es.version>7.1.0</es.version>
   </properties>
 
   <dependencies>
@@ -45,6 +46,13 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch-hadoop -->
+    <dependency>
+      <groupId>org.elasticsearch</groupId>
+      <artifactId>elasticsearch-hadoop</artifactId>
+      <version>${es.version}</version>
+    </dependency>
+
     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>fastjson</artifactId>

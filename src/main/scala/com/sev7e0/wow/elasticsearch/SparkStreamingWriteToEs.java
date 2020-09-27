@@ -1,11 +1,9 @@
 package com.sev7e0.wow.elasticsearch;
 
-import com.alibaba.fastjson.JSONObject;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.elasticsearch.hadoop.cfg.ConfigurationOptions;
-import org.elasticsearch.spark.rdd.EsSpark;
 import org.elasticsearch.spark.rdd.api.java.JavaEsSpark;
 
 /**

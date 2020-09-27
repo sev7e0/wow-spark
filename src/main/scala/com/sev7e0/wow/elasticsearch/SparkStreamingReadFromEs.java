@@ -3,11 +3,8 @@ package com.sev7e0.wow.elasticsearch;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.rdd.RDD;
 import org.elasticsearch.hadoop.cfg.ConfigurationOptions;
-import org.elasticsearch.spark.rdd.EsSpark;
 import org.elasticsearch.spark.rdd.api.java.JavaEsSpark;
-import scala.Tuple2;
 
 /**
  * Title:  SparkStreamingReadFromEs.java
@@ -34,10 +31,10 @@ public class SparkStreamingReadFromEs {
 		sparkConf.set(ConfigurationOptions.ES_NET_HTTP_AUTH_PASS, LocalConfiguration.ES_NET_HTTP_AUTH_PASS);
 		JavaSparkContext context = new JavaSparkContext(sparkConf);
 
-		JavaPairRDD<String, String> esJsonRDD = JavaEsSpark.esJsonRDD(context,"/device");
+		JavaPairRDD<String, String> esJsonRDD = JavaEsSpark.esJsonRDD(context, "/device");
 
 
-		esJsonRDD.foreach(t -> System.out.println(t._1+"==========="+t._2));
+		esJsonRDD.foreach(t -> System.out.println(t._1 + "===========" + t._2));
 
 
 	}
